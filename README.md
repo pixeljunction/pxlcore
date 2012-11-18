@@ -17,3 +17,10 @@
 =========
 
 Pxl Core is a plugin to provide backbone functions to any WordPress build. When building WordPress themes do you find yourself including the same pieces of code over and over again between sites. The aim of this plugin is to provide all this functionality simply by activating a plugin and setting a few plugin options to suite your needs.
+
+## Installation
+===============
+
+Installation is simple. Navigate to the Plugins menu in the WordPress dashboard and click the add new link. Select the .zip file of this plugin that you will have downloaded and then once uploaded activate the plugin.
+
+The plugins settings page can be found on the Settings menu in the WordPress dashboard. He you can switch off various elements on the plugin should your theme not needed them, for example Post Thumbnails (WordPress featured image).
