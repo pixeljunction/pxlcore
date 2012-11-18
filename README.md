@@ -1,4 +1,4 @@
-![null logo](https://www.dropbox.com/s/tdm67zs7cghyrmz/pxlcore-logo-github.jpg)
+![null logo](http://markwilkinson.me/wp-content/uploads/2012/11/pxlcore-logo-github.jpg)
 
 # pxlcore
 =========
