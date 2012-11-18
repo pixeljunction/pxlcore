@@ -1,3 +1,5 @@
+![null logo](https://www.dropbox.com/s/tdm67zs7cghyrmz/pxlcore-logo-github.jpg)
+
 # pxlcore
 =========
 
