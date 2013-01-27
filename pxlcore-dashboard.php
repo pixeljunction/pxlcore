@@ -106,6 +106,19 @@ if ( ! function_exists( 'pxlcore_remove_dashboard_widgets' ) ) { // check it doe
 /* add our remove function to apply on dashbaord setup */
 add_action('wp_dashboard_setup', 'pxlcore_remove_dashboard_widgets' );
 
+/* unregister some widgets to clean-up the dashboard */
+function pxjn_unregister_widgets() {
+	unregister_widget( 'WP_Widget_Calendar' );
+	unregister_widget( 'WP_Widget_Links' );
+	unregister_widget( 'WP_Widget_Meta' );
+	unregister_widget( 'WP_Widget_Search' );
+	unregister_widget( 'WP_Widget_Recent_Comments' );
+	unregister_widget( 'WP_Widget_RSS' );
+}
+
+/* add the unregister function to the widget init hook */
+add_action('widgets_init', 'pxjn_unregister_widgets', 1);
+
 /* adds our own dashboard widget as a welcome screen item */
 if ( ! function_exists( 'pxlcore_wp_dashboard_widget' ) ) { // check it doesn't exist in child theme
 	function pxlcore_wp_dashboard_widget() {
