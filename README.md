@@ -4,7 +4,7 @@
 =========
 
 * Contributors: [@wpmark](http://twitter.com/wpmark)
-* Plugin Name: null
+* Plugin Name: pxlcore
 * Plugin URI: [http://markwilkinson.me](http://markwilkinson.me)
 * Description: PxlCore: Provides additionally functionality (or removing functionality) to WordPress, great for client site builds.
 * Author: [Mark Wilkinson](http://markwilkinson.me)
