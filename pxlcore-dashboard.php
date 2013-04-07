@@ -193,3 +193,28 @@ function pxlcore_dashboard_setup() {
 }
 
 add_action( 'wp_dashboard_setup', 'pxlcore_dashboard_setup' );
+
+/***************************************************************
+* Function pxlcore_blog_public_warning()
+* Adds an admin notice to warn that the blog is hidden from
+* search engines when the reading option is chosen
+***************************************************************/
+function pxlcore_blog_public_warning() {
+	
+	/* get the options for blog being public */
+	$pxlcore_blog_public = get_option( 'blog_public' );
+	
+	/* check wether the blog is preventing search engines */
+	if( $pxlcore_blog_public == 0 ) {
+	
+		?>
+	    <div class="error">
+	        <p>Search engines are currently being prevented to indexing this site. Please correct this once the site goes live.</p>
+	    </div>
+	    <?php
+	
+	}
+	
+}
+
+add_action( 'admin_notices', 'pxlcore_blog_public_warning' );
