@@ -1,20 +1,17 @@
 <?php
-/**
- * @package pxlcore
-*/
 /*
 Plugin Name: Pixel Core
 Plugin URI: http://markwilkinson.me/plugins/pixelcore
 Description: This is a backone plugin that adds a bunch of functions to transform(!) your WordPress blog ready to start theming. After building a number of WordPress sites I found myself adding the same code to every site and therefore I have bundled this into a plugin.
-Version: 1.0
+Version: 1.1
 Author: Mark Wilkinson
 Author URI: http://markwilkinson.me
 License: GPLv2 or later
 */
 
 /* lets start by making this plugin updatable - this uses the wp-updates.com site */
-require_once('wp-updates-plugin.php');
-new WPUpdatesPluginUpdater( 'http://wp-updates.com/api/1/plugin', 51, plugin_basename(__FILE__) );
+require_once( 'wp-updates-plugin.php' );
+new WPUpdatesPluginUpdater( 'http://wp-updates.com/api/1/plugin', 51, plugin_basename( __FILE__ ) );
 
 /* load plugin dashboard functions */
 require_once dirname( __FILE__ ) . '/pxlcore-dashboard.php';
@@ -22,34 +19,41 @@ require_once dirname( __FILE__ ) . '/pxlcore-dashboard.php';
 /* load plugin counter functions for loops */
 require_once dirname( __FILE__ ) . '/pxlcore-counters.php';
 
-/* adds content of a custom field with meta key 'pxlcore_postclass' into the post_class function */
-add_filter( 'post_class', 'pxlcore_post_class' );
+/***************************************************************
+* Function pxlcore_post_class()
+* Allows a custom field of pxlcore_postclass to be added in
+* order to add custom classes to posts.
+***************************************************************/
+function pxlcore_post_class( $pxlcore_classes ) {
 
-/* create our post class function */
-if ( ! function_exists( 'pxlcore_post_class' ) ) { // check it doesn't exist in child theme
-	function pxlcore_post_class( $pxlcore_classes ) {
+	/* Get the current post ID. */
+	$pxlcore_post_id = get_the_ID();
 	
-		/* Get the current post ID. */
-		$pxlcore_post_id = get_the_ID();
+	/* If we have a post ID, proceed. */
+	if ( !empty( $pxlcore_post_id ) ) {
+	
+		/* Get the custom post class. */
+		$pxlcore_post_class_raw = get_post_meta( $pxlcore_post_id, 'pxlcore_postclass', true );
 		
-		/* If we have a post ID, proceed. */
-		if ( !empty( $pxlcore_post_id ) ) {
+		/* force the custom field to be lower case. */
+		$pxlcore_post_class = strtolower($pxlcore_post_class_raw);
 		
-			/* Get the custom post class. */
-			$pxlcore_post_class_raw = get_post_meta( $pxlcore_post_id, 'pxlcore_postclass', true );
+		/* If a post class was input, sanitize it and add it to the post class array. */
+		if ( !empty( $pxlcore_post_class ) )
+			$pxlcore_classes[] = sanitize_html_class( $pxlcore_post_class );
 			
-			/* force the custom field to be lower case. */
-			$pxlcore_post_class = strtolower($pxlcore_post_class_raw);
-			
-			/* If a post class was input, sanitize it and add it to the post class array. */
-			if ( !empty( $pxlcore_post_class ) )
-				$pxlcore_classes[] = sanitize_html_class( $pxlcore_post_class );
-		}
-		return $pxlcore_classes;
 	}
+	
+	return $pxlcore_classes;
 }
 
-/* pxjn comments function */
+add_filter( 'post_class', 'pxlcore_post_class' );
+
+/***************************************************************
+* Function pxlcore_comments()
+* Comments function for display comments. This function is passed
+* to the comments_template.
+***************************************************************/
 if ( ! function_exists( 'pxlcore_comments' ) ) { // check it doesn't exist in child theme
 	function pxlcore_comments( $comment, $args, $depth ) {
 		$GLOBALS['comment'] = $comment;
@@ -90,56 +94,146 @@ if ( ! function_exists( 'pxlcore_comments' ) ) { // check it doesn't exist in ch
 	}
 }
 
-/* multiple page post navigation function (taken from the twentyeleven theme) */
+/***************************************************************
+* Function pxlcore_content_nav()
+* Function to displaying multiple posts per page navigation.
+* Display as a numbered list, needs styling.
+***************************************************************/
 if ( ! function_exists( 'pxlcore_content_nav' ) ) { // check it doesn't exist in child theme
 	function pxlcore_content_nav() {
-		global $wp_query;
 		
-		/* if the maximum pages we have in our query is more than 1 */
-		if ( $wp_query->max_num_pages > 1 ) {
+		/* initiate global variable for database and wp_query */
+		global $wpdb, $wp_query;
+	
+		$request = $wp_query->request;
+		$posts_per_page = intval(get_query_var('posts_per_page'));
+		$paged = intval(get_query_var('paged'));
+		$numposts = $wp_query->found_posts;
+		$max_page = $wp_query->max_num_pages;
+	
+		if(empty($paged) || $paged == 0) {
+			$paged = 1;
+		}
 		
-			/* setup our content nav output stored as variable */
-			$pxlcore_content_nav_output = '<div class="navigation">';
-				$pxlcore_content_nav_output .= '<div class="nav-alignleft">' . next_posts_link('&laquo; Older Entries') . '</div><div class="nav-alignright">' . previous_posts_link('Newer Entries &raquo;') . '</div>';
-			$pxlcore_content_nav_output .= '</div>';
-			
-			/* return our output, first running it through a filter so it can be changed in a plugin or child theme */
-			return apply_filters( 'pxlcore_content_nav_output', $pxlcore_content_nav_output );
-			
+		$pages_to_show = apply_filters('pxjn_filter_pages_to_show', 8);
+		$pages_to_show_minus_1 = $pages_to_show-1;
+		$half_page_start = floor($pages_to_show_minus_1/2);
+		$half_page_end = ceil($pages_to_show_minus_1/2);
+		$start_page = $paged - $half_page_start;
+		
+		if($start_page <= 0) {
+			$start_page = 1;
 		}
+		
+		$end_page = $paged + $half_page_end;
+		
+		if(($end_page - $start_page) != $pages_to_show_minus_1) {
+			$end_page = $start_page + $pages_to_show_minus_1;
+		}
+		
+		if($end_page > $max_page) {
+			$start_page = $max_page - $pages_to_show_minus_1;
+			$end_page = $max_page;
+		}
+		
+		if($start_page <= 0) {
+			$start_page = 1;
+		}
+	
+		if ($max_page > 1) {
+			echo $before.'<div class="pagenav clearfix">';
+			if ($start_page >= 2 && $pages_to_show < $max_page) {
+				$first_page_text = "&laquo;";
+				echo '<a href="'.get_pagenum_link().'" title="'.$first_page_text.'" class="number">'.$first_page_text.'</a>';
+			}
+			//previous_posts_link('&lt;');
+			for($i = $start_page; $i  <= $end_page; $i++) {
+				if($i == $paged) {
+					echo ' <span class="number current">'.$i.'</span> ';
+				} else {
+					echo ' <a href="'.get_pagenum_link($i).'" class="number">'.$i.'</a> ';
+				}
+			}
+			//next_posts_link('&gt;');
+			if ($end_page < $max_page) {
+				$last_page_text = "&raquo;";
+				echo '<a href="'.get_pagenum_link($max_page).'" title="'.$last_page_text.'" class="number">'.$last_page_text.'</a>';
+			}
+			echo '</div>'.$after;
+		}
+		
 	}
+	
 }
 
-/* get featured image url function */
-if ( ! function_exists( 'pxlcore_featured_img_url' ) ) { // check it doesn't exist in child theme
-	function pxlcore_featured_img_url($pxlcore_featured_img_size) {
-		$pxlcore_image_id = get_post_thumbnail_id();
-		$pxlcore_image_url = wp_get_attachment_image_src($pxlcore_image_id,$pxlcore_featured_img_size);
-		$pxlcore_image_url = $pxlcore_image_url[0];
-		return $pxlcore_image_url;
-	}
+/***************************************************************
+* Function pxlcore_featured_img_url()
+* Function to output the featured image url.
+***************************************************************/
+function pxlcore_featured_img_url( $pxlcore_featured_img_size ) {
+	
+	/* get the id of the featured image */
+	$pxlcore_image_id = get_post_thumbnail_id();
+	
+	/* get the image src date for this featuredimage id */
+	$pxlcore_image_url = wp_get_attachment_image_src( $pxlcore_image_id, $pxlcore_featured_img_size );
+	
+	/* get the first part of the array which is the url */
+	$pxlcore_image_url = $pxlcore_image_url[0];
+	
+	/* output the url */
+	return $pxlcore_image_url;
+
 }
 
-/* get featured image caption */
-if ( ! function_exists( 'pxlcore_featured_img_caption' ) ) { // check it doesn't exist in child theme
-	function pxlcore_featured_img_caption() {
-		global $post;
-		$pxlcore_thumbnail_id = get_post_thumbnail_id($post->ID);
-		$pxlcore_thumbnail_image = get_posts(array('p' => $pxlcore_thumbnail_id, 'post_type' => 'attachment', 'post_status' => 'any'));
-		if ($pxlcore_thumbnail_image && isset($pxlcore_thumbnail_image[0])) {
-			return '<p>'.$pxlcore_thumbnail_image[0]->post_excerpt.'</p>';
-		}
-	}
+/***************************************************************
+* Function pxlcore_featured_img_caption()
+* Function to output the featured image caption. Pass to it before
+* and after tags, such as '<p>' and '</p>'
+***************************************************************/
+function pxlcore_featured_img_caption( $pxlcore_before, $pxlcore_after ) {
+	
+	/* load the global post variable */
+	global $post;
+	
+	/* get the id of the featured image */
+	$pxlcore_thumbnail_id = get_post_thumbnail_id( $post->ID );
+	
+	/* get any attachment posts with the above attachment id i.e. get the post data for the featured image */
+	$pxlcore_thumbnail_image = get_posts( array( 'p' => $pxlcore_thumbnail_id, 'post_type' => 'attachment', 'post_status' => 'any' ) );
+	
+	/* if we have a post returend */
+	if( $pxlcore_thumbnail_image && isset( $pxlcore_thumbnail_image[0] ) ) {
+		
+		/* return the caption in a paragraph tag */
+		return $pxlcore_before . $pxlcore_thumbnail_image[0]->post_excerpt . $pxlcore_after;
+	
+	} // end if we have a post
+	
 }
 
-/* get featured image title */
-if ( ! function_exists( 'pxlcore_featured_img_title' ) ) { // check it doesn't exist in child theme
-	function pxlcore_featured_img_title() {
-		global $post;
-		$pxlcore_thumbnail_id = get_post_thumbnail_id($post->ID);
-		$pxlcore_thumbnail_image = get_posts(array('p' => $pxlcore_thumbnail_id, 'post_type' => 'attachment', 'post_status' => 'any'));
-		if ($pxlcore_thumbnail_image && isset($pxlcore_thumbnail_image[0])) {
-			return '<span class="featured-image-title">'.$pxlcore_thumbnail_image[0]->post_title.'</h2>';
-		}
-	}
+/***************************************************************
+* Function pxlcore_featured_img_title()
+* Function to output the featured image title. Pass to it before
+* and after tags, such as '<h2>' and '</h2>'
+***************************************************************/
+function pxlcore_featured_img_title( $pxlcore_before, $pxlcore_after ) {
+	
+	/* load the global post variable */
+	global $post;
+	
+	/* get the id of the featured image */
+	$pxlcore_thumbnail_id = get_post_thumbnail_id( $post->ID );
+	
+	/* get any attachment posts with the above attachment id i.e. get the post data for the featured image */
+	$pxlcore_thumbnail_image = get_posts( array( 'p' => $pxlcore_thumbnail_id, 'post_type' => 'attachment', 'post_status' => 'any' ) );
+	
+	/* if we have a post returend */
+	if( $pxlcore_thumbnail_image && isset( $pxlcore_thumbnail_image[0] ) ) {
+		
+		/* return the caption in a span tag */
+		return $pxlcore_before . $pxlcore_thumbnail_image[0]->post_title . $pxlcore_after;
+	
+	} // end if we have a post
+
 }
