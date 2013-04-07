@@ -9,10 +9,6 @@ Author URI: http://markwilkinson.me
 License: GPLv2 or later
 */
 
-/* lets start by making this plugin updatable - this uses the wp-updates.com site */
-require_once( 'wp-updates-plugin.php' );
-new WPUpdatesPluginUpdater( 'http://wp-updates.com/api/1/plugin', 51, plugin_basename( __FILE__ ) );
-
 /* load plugin dashboard functions */
 require_once dirname( __FILE__ ) . '/pxlcore-dashboard.php';
 
