@@ -55,19 +55,6 @@ function pxlcore_plugin_mce_css( $mce_css ) {
 add_filter( 'mce_css', 'pxlcore_plugin_mce_css' );
 
 /***************************************************************
-* Function pxlcore_login_logo_height()
-* Function to set the height of the login logo
-***************************************************************/
-if ( ! function_exists( 'pxlcore_login_logo_height' ) ) {
-	function pxlcore_login_logo_height() {
-	
-		$pxlcore_logo_height = ' 65px';
-		return $pxlcore_logo_height;
-	
-	}
-}
-
-/***************************************************************
 * Function pxlcore_login_logo()
 * Adds a login logo from the theme folder if present, otherwise
 * falls back to the default
@@ -76,13 +63,13 @@ function pxlcore_login_logo() {
 
 	/* check whether a login logo exists in the child theme */
 	if( file_exists( STYLESHEETPATH . '/images/login-logo.png' ) ) {
-	
+		
 		echo '
 			<style>
 			.login h1 a {
 				background-image: url('.get_stylesheet_directory_uri() . '/images/login-logo.png);
-				background-size: 274px '. pxlcore_login_logo_height() .';
-				height: '. pxlcore_login_logo_height() .';
+				background-size: 300px 100px;
+				height: 100px;
 			}
 			</style>
 		';

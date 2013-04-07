@@ -50,44 +50,42 @@ add_filter( 'post_class', 'pxlcore_post_class' );
 * Comments function for display comments. This function is passed
 * to the comments_template.
 ***************************************************************/
-if ( ! function_exists( 'pxlcore_comments' ) ) { // check it doesn't exist in child theme
-	function pxlcore_comments( $comment, $args, $depth ) {
-		$GLOBALS['comment'] = $comment;
-		switch ( $comment->comment_type ) :
-			case '' :
-		?>
-		<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-			<div id="comment-<?php comment_ID(); ?>">
-                <div class="comment-author vcard">
-                    <?php echo get_avatar( $comment, 40 ); ?>
-                    <?php printf( __( '%s <span class="says">says:</span>', 'pj' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
-                </div><!-- .comment-author .vcard -->
-                <?php if ( $comment->comment_approved == '0' ) : ?>
-                    <em><?php _e( 'Your comment is awaiting moderation.', 'pj' ); ?></em>
-                    <br />
-                <?php endif; ?>
-                <div class="comment-meta commentmetadata"><a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
-                    <?php
-                        /* translators: 1: date, 2: time */
-                        printf( __( '%1$s at %2$s', 'pj' ), get_comment_date(),  get_comment_time() ); ?></a><?php edit_comment_link( __( '(Edit)', 'pj' ), ' ' );
-                    ?>
-                </div><!-- .comment-meta .commentmetadata -->
-                <div class="comment-body"><?php comment_text(); ?></div>
-                <div class="reply">
-                    <?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
-                </div><!-- .reply -->
-            </div><!-- #comment-##  -->
-		<?php
-				break;
-			case 'pingback'  :
-			case 'trackback' :
-		?>
-		<li class="post pingback">
-			<p><?php _e( 'Pingback:', 'pj' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __('(Edit)', 'pj'), ' ' ); ?></p>
-		<?php
-				break;
-		endswitch;
-	}
+function pxlcore_comments( $comment, $args, $depth ) {
+	$GLOBALS['comment'] = $comment;
+	switch ( $comment->comment_type ) :
+		case '' :
+	?>
+	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
+		<div id="comment-<?php comment_ID(); ?>">
+            <div class="comment-author vcard">
+                <?php echo get_avatar( $comment, 40 ); ?>
+                <?php printf( __( '%s <span class="says">says:</span>', 'pj' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
+            </div><!-- .comment-author .vcard -->
+            <?php if ( $comment->comment_approved == '0' ) : ?>
+                <em><?php _e( 'Your comment is awaiting moderation.', 'pj' ); ?></em>
+                <br />
+            <?php endif; ?>
+            <div class="comment-meta commentmetadata"><a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
+                <?php
+                    /* translators: 1: date, 2: time */
+                    printf( __( '%1$s at %2$s', 'pj' ), get_comment_date(),  get_comment_time() ); ?></a><?php edit_comment_link( __( '(Edit)', 'pj' ), ' ' );
+                ?>
+            </div><!-- .comment-meta .commentmetadata -->
+            <div class="comment-body"><?php comment_text(); ?></div>
+            <div class="reply">
+                <?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+            </div><!-- .reply -->
+        </div><!-- #comment-##  -->
+	<?php
+			break;
+		case 'pingback'  :
+		case 'trackback' :
+	?>
+	<li class="post pingback">
+		<p><?php _e( 'Pingback:', 'pj' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __('(Edit)', 'pj'), ' ' ); ?></p>
+	<?php
+			break;
+	endswitch;
 }
 
 /***************************************************************
@@ -95,69 +93,66 @@ if ( ! function_exists( 'pxlcore_comments' ) ) { // check it doesn't exist in ch
 * Function to displaying multiple posts per page navigation.
 * Display as a numbered list, needs styling.
 ***************************************************************/
-if ( ! function_exists( 'pxlcore_content_nav' ) ) { // check it doesn't exist in child theme
-	function pxlcore_content_nav() {
-		
-		/* initiate global variable for database and wp_query */
-		global $wpdb, $wp_query;
+function pxlcore_content_nav() {
 	
-		$request = $wp_query->request;
-		$posts_per_page = intval(get_query_var('posts_per_page'));
-		$paged = intval(get_query_var('paged'));
-		$numposts = $wp_query->found_posts;
-		$max_page = $wp_query->max_num_pages;
+	/* initiate global variable for database and wp_query */
+	global $wpdb, $wp_query;
+
+	$request = $wp_query->request;
+	$posts_per_page = intval(get_query_var('posts_per_page'));
+	$paged = intval(get_query_var('paged'));
+	$numposts = $wp_query->found_posts;
+	$max_page = $wp_query->max_num_pages;
+
+	if(empty($paged) || $paged == 0) {
+		$paged = 1;
+	}
 	
-		if(empty($paged) || $paged == 0) {
-			$paged = 1;
-		}
-		
-		$pages_to_show = apply_filters('pxjn_filter_pages_to_show', 8);
-		$pages_to_show_minus_1 = $pages_to_show-1;
-		$half_page_start = floor($pages_to_show_minus_1/2);
-		$half_page_end = ceil($pages_to_show_minus_1/2);
-		$start_page = $paged - $half_page_start;
-		
-		if($start_page <= 0) {
-			$start_page = 1;
-		}
-		
-		$end_page = $paged + $half_page_end;
-		
-		if(($end_page - $start_page) != $pages_to_show_minus_1) {
-			$end_page = $start_page + $pages_to_show_minus_1;
-		}
-		
-		if($end_page > $max_page) {
-			$start_page = $max_page - $pages_to_show_minus_1;
-			$end_page = $max_page;
-		}
-		
-		if($start_page <= 0) {
-			$start_page = 1;
-		}
+	$pages_to_show = apply_filters('pxjn_filter_pages_to_show', 8);
+	$pages_to_show_minus_1 = $pages_to_show-1;
+	$half_page_start = floor($pages_to_show_minus_1/2);
+	$half_page_end = ceil($pages_to_show_minus_1/2);
+	$start_page = $paged - $half_page_start;
 	
-		if ($max_page > 1) {
-			echo $before.'<div class="pagenav clearfix">';
-			if ($start_page >= 2 && $pages_to_show < $max_page) {
-				$first_page_text = "&laquo;";
-				echo '<a href="'.get_pagenum_link().'" title="'.$first_page_text.'" class="number">'.$first_page_text.'</a>';
-			}
-			//previous_posts_link('&lt;');
-			for($i = $start_page; $i  <= $end_page; $i++) {
-				if($i == $paged) {
-					echo ' <span class="number current">'.$i.'</span> ';
-				} else {
-					echo ' <a href="'.get_pagenum_link($i).'" class="number">'.$i.'</a> ';
-				}
-			}
-			//next_posts_link('&gt;');
-			if ($end_page < $max_page) {
-				$last_page_text = "&raquo;";
-				echo '<a href="'.get_pagenum_link($max_page).'" title="'.$last_page_text.'" class="number">'.$last_page_text.'</a>';
-			}
-			echo '</div>'.$after;
+	if($start_page <= 0) {
+		$start_page = 1;
+	}
+	
+	$end_page = $paged + $half_page_end;
+	
+	if(($end_page - $start_page) != $pages_to_show_minus_1) {
+		$end_page = $start_page + $pages_to_show_minus_1;
+	}
+	
+	if($end_page > $max_page) {
+		$start_page = $max_page - $pages_to_show_minus_1;
+		$end_page = $max_page;
+	}
+	
+	if($start_page <= 0) {
+		$start_page = 1;
+	}
+
+	if ($max_page > 1) {
+		echo $before.'<div class="pagenav clearfix">';
+		if ($start_page >= 2 && $pages_to_show < $max_page) {
+			$first_page_text = "&laquo;";
+			echo '<a href="'.get_pagenum_link().'" title="'.$first_page_text.'" class="number">'.$first_page_text.'</a>';
 		}
-		
+		//previous_posts_link('&lt;');
+		for($i = $start_page; $i  <= $end_page; $i++) {
+			if($i == $paged) {
+				echo ' <span class="number current">'.$i.'</span> ';
+			} else {
+				echo ' <a href="'.get_pagenum_link($i).'" class="number">'.$i.'</a> ';
+			}
+		}
+		//next_posts_link('&gt;');
+		if ($end_page < $max_page) {
+			$last_page_text = "&raquo;";
+			echo '<a href="'.get_pagenum_link($max_page).'" title="'.$last_page_text.'" class="number">'.$last_page_text.'</a>';
+		}
+		echo '</div>'.$after;
 	}
 	
 }
