@@ -103,14 +103,8 @@ add_action( 'login_head', 'pxlcore_login_logo' );
 ***************************************************************/
 function pxlcore_remove_admin_menus() {
 
-	/* get the current user information */
-	global $current_user;
-	
-	/* get the current users ID and assign to variable */
-	$current_user = wp_get_current_user(); $current_user_id = $current_user->ID;
-	
-	/* if the current user ID is greater than 2 */
-	if( $current_user_id > 2 ) {
+	/* if the current user is not a pixel team member */
+	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
 	
 		/* remove menus that are not required */
 		remove_menu_page( 'tools.php');
@@ -124,7 +118,7 @@ function pxlcore_remove_admin_menus() {
 		remove_submenu_page( 'options-general.php', 'options-reading.php' );
 		remove_submenu_page( 'options-general.php', 'options-discussion.php' );
 	
-	} // end if user if is more than 2
+	} // end if user is not a pixel member
 	
 }
 
@@ -212,6 +206,66 @@ function pxlcore_dashboard_setup() {
 add_action( 'wp_dashboard_setup', 'pxlcore_dashboard_setup' );
 
 /***************************************************************
+* Function pxlcore_pixel_profile_field()
+* Adds additional field on the users profile page which makes
+* the user a member of team pixel!
+***************************************************************/
+function pxlcore_pixel_profile_field( $user ) {
+	
+	/* bail out early if user is not an admin */
+	if ( !current_user_can( 'manage_options' ) )
+		return false;
+	
+	?>
+	
+	<h3>Additional Information</h3>
+
+	<table class="form-table">
+
+		<tr>
+			<th><label for="pixel_member">Pixel Team Member?</label></th>
+
+			<td>
+				<select name="pixel_member" id="pixel_member">
+				
+					<option value="no" <?php if( esc_attr( get_user_meta( $user->ID, 'pixel_member', true ) ) == 'no' ) { echo 'selected="selected"'; } ?>>No</option>
+					<option value="yes"<?php if( esc_attr( get_user_meta( $user->ID, 'pixel_member', true ) ) == 'yes' ) { echo 'selected="selected"'; } ?>>Yes</option>
+				
+				</select>
+				
+				<span class="description">Choose whether this user is a member of the Pixel Junction Team.</span>
+				
+			</td>
+		</tr>
+	
+	</table>
+	
+	<?php
+	
+}
+
+add_action( 'show_user_profile', 'pxlcore_pixel_profile_field' );
+add_action( 'edit_user_profile', 'pxlcore_pixel_profile_field' );
+
+/***************************************************************
+* Function pxlcore_save_pixel_profile_field()
+* Saves the information from the additional profile fields
+***************************************************************/
+function pxlcore_save_pixel_profile_field( $user_id ) {
+	
+	/* check the current user is a super admin */
+	if ( !current_user_can( 'manage_options', $user_id ) )
+		return false;
+	
+	/* update the user meta with the additional fields on the profile page */
+	update_usermeta( $user_id, 'pixel_member', $_POST[ 'pixel_member' ] );
+	
+}
+
+add_action( 'personal_options_update', 'pxlcore_save_pixel_profile_field' );
+add_action( 'edit_user_profile_update', 'pxlcore_save_pixel_profile_field' );
+
+/***************************************************************
 * Function pxlcore_blog_public_warning()
 * Adds an admin notice to warn that the blog is hidden from
 * search engines when the reading option is chosen
@@ -270,14 +324,8 @@ function pxlcore_update_start() {
 	/* check whether the current admin page is the upate-core.php page */
 	if( $pagenow == 'update-core.php' ) {
 		
-		/* get the current user information */
-		global $current_user;
-		
-		/* get the current users ID and assign to variable */
-		$current_user = wp_get_current_user(); $current_user_id = $current_user->ID;
-		
-		/* if the current user ID is greater than 2 */
-		//if( $current_user_id > 2 ) {
+		/* if the current user is not a pixel team member */
+		if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
 		
 			/* echo our message */ ?>
 			<div id="pxlcore-updates" class="wrap">
@@ -296,7 +344,7 @@ function pxlcore_update_start() {
 			
 			<?php
 		
-		//} // end if user is greater than 2
+		} // end if user is not a pixel team member
 		
 	} // end if we are on update-core page
 	
@@ -306,7 +354,8 @@ add_action( 'admin_notices', 'pxlcore_update_start' );
 
 /***************************************************************
 * Function pxlcore_update_core_preamble()
-* Adds output to the update-core.php page in the admin
+* Adds a closing div to our wrapper div added with the admin
+* notice on the update-core.php page.
 ***************************************************************/
 function pxlcore_update_end() {
 	
