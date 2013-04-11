@@ -164,7 +164,7 @@ function pxlcore_dashboard_widget() {
 	if( empty( $pxlcore_dashboard_widget_path ) ) {
 		
 		/* if the path is empty - lets load some default content from the plugin */
-		$pxlcore_dashboard_widget_path = dirname( __FILE__ ) . '/dashboard-widget.php';
+		$pxlcore_dashboard_widget_path = dirname( __FILE__ ) . '/inc/dashboard-widget.php';
 		
 	}
 	
@@ -305,22 +305,31 @@ function pxlcore_update_start() {
 		/* if the current user is not a pixel team member */
 		if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
 		
-			/* echo our message */ ?>
-			<div id="pxlcore-updates" class="wrap">
+			/* echo our message */
+			echo '<div id="pxlcore-updates" class="wrap">';
 			
-				<h2>Information About Upgrading - Proceed with Caution!</h2>
-			
-				<p>You have updates that can be added to WordPress. These updates will bring your site to the latest version of WordPress as well as making sure any plugins that your site runs are also up-to-date. Please be aware however that if you choose to update, there is a risk of your site not functioning correctly due to the new version of WordPress being incompatible with features of your site.</p>
-				<p>Pixel Junction highly recommend that you content us to complete the upgrade for you at a cost of £40 + VAT. We will make a copy of your site, using this to perform an update. Once we are happy that the update is successful and the site still functions as it should, we will then apply this update to your live site.</p>
-				<p>You can of course go ahead and apply the updates yourself, but please bare in mind the above information.</p>
+				/* setup a template file to use for the dashboard widget */
+				$pxlcore_update_warning_templatename = 'update-warning.php';
 				
-				<p><span class="message button pxlcore-button"><a class="show_hide" href="#">Proceed with Upgrade</a></span></p>
+				/* locate the template from above in the theme */
+				$pxlcore_update_warning_path = locate_template( $pxlcore_update_warning_templatename );
 				
-			</div>
+				/* check whether the theme has this template or not */
+				if( empty( $pxlcore_update_warning_path ) ) {
+					
+					/* if the path is empty - lets load some default content from the plugin */
+					$pxlcore_update_warning_path = dirname( __FILE__ ) . '/inc/update-warning.php';
+					
+				}
+				
+				/* include the template file containig the widget content */
+				include_once( $pxlcore_update_warning_path );
+				
+				echo '<p><span class="message button pxlcore-button"><a class="show_hide" href="#">Proceed with Upgrade</a></span></p>';
+				
+			echo '</div>';
 			
-			<div id="pxlcore-updates-wrap">
-			
-			<?php
+			echo '<div id="pxlcore-updates-wrap">';
 		
 		} // end if user is not a pixel team member
 		
