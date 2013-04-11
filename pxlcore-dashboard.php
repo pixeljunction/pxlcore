@@ -125,28 +125,6 @@ function pxlcore_remove_admin_menus() {
 add_action( 'admin_menu', 'pxlcore_remove_admin_menus', 999 );
 
 /***************************************************************
-* Function pxlcore_remove_update_nag()
-* Removes the wordpress update nag for plugins and core for non
-* pixel junction members
-***************************************************************/
-function pxlcore_remove_update_nag() {
-
-	/* get the current user information */
-	global $current_user;
-	
-	/* get the current users ID and assign to variable */
-	$current_user = wp_get_current_user(); $current_user_id = $current_user->ID;
-	
-	/* if the current user ID is greater than 2 */
-	if( $current_user_id > 2 ) {
-	
-		add_filter( 'pre_site_transient_update_core', create_function( '$a', "return null;" ) );
-	
-	} // end if user if is more than 2
-	
-}
-
-/***************************************************************
 * Function pxlcore_remove_dashboard_widgets()
 * Removes wordpress metaboxes from the dashboard home screen
 ***************************************************************/
