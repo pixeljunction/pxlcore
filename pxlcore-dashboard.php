@@ -1,39 +1,55 @@
 <?php
 /***************************************************************
-* Function pxjn_howdy()
+* Function pxlcore_admin_css()
+* Adds css stylesheet to head in all admin pages
+***************************************************************/
+function pxlcore_admin_css() {
+	
+	/* register the stylesheet */
+    wp_register_style( 'pxlcore_admin_css', plugins_url( 'css/admin-style.css', __FILE__ ) );
+    
+    /* enqueue the stylsheet */
+    wp_enqueue_style( 'pxlcore_admin_css' );
+    
+}
+
+add_action( 'admin_enqueue_scripts', 'pxlcore_admin_css' );
+
+/***************************************************************
+* Function pxlcore_howdy()
 * Change Howdy? in the admin bar
 ***************************************************************/
-function pxjn_howdy() {
+function pxlcore_howdy() {
 	
 	global $wp_admin_bar;
 	
 	/* get the current logged in users gravatar */
-	$pxjn_avatar = get_avatar( get_current_user_id(), 16 );
+	$pxlcore_avatar = get_avatar( get_current_user_id(), 16 );
 	       
     /* there is a howdy node, lets alter it */
     $wp_admin_bar->add_node(
     	array(
 	        'id' => 'my-account',
-	        'title' => sprintf( 'Logged in as, %s', wp_get_current_user()->display_name ) . $pxjn_avatar,
+	        'title' => sprintf( 'Logged in as, %s', wp_get_current_user()->display_name ) . $pxlcore_avatar,
 	    )
 	);
 
 }
 
-add_filter( 'admin_bar_menu', 'pxjn_howdy', 10, 2 );
+add_filter( 'admin_bar_menu', 'pxlcore_howdy', 10, 2 );
 
 /***************************************************************
-* Function pxjn_admin_footer_text()
+* Function pxlcore_admin_footer_text()
 * Change the display text in the wordpress dashboard footer
 ***************************************************************/
-function pxjn_admin_footer_text () {
+function pxlcore_admin_footer_text () {
 			
 	/* the text we want to display in the footer */
 	echo "Site created by <a href='http://pixeljunction.co.uk'>Pixel Junction</a> using <a href='http://wordpress.org'>WordPress</a>";
 	
 }
 
-add_filter('admin_footer_text', 'pxjn_admin_footer_text');
+add_filter('admin_footer_text', 'pxlcore_admin_footer_text');
 
 /***************************************************************
 * Function pxlcore_plugin_mce_css()
@@ -101,6 +117,7 @@ function pxlcore_remove_admin_menus() {
 		remove_menu_page( 'plugins.php');
 		remove_menu_page( 'link-manager.php');
 		remove_submenu_page( 'themes.php', 'themes.php' );
+		remove_submenu_page( 'index.php', 'update-core.php' );
 		remove_submenu_page( 'options-general.php', 'options-media.php' );
 		remove_submenu_page( 'options-general.php', 'options-permalink.php' );
 		remove_submenu_page( 'options-general.php', 'options-privacy.php' );
@@ -114,11 +131,11 @@ function pxlcore_remove_admin_menus() {
 add_action( 'admin_menu', 'pxlcore_remove_admin_menus', 999 );
 
 /***************************************************************
-* Function pxjn_remove_update_nag()
+* Function pxlcore_remove_update_nag()
 * Removes the wordpress update nag for plugins and core for non
 * pixel junction members
 ***************************************************************/
-function pxjn_remove_update_nag() {
+function pxlcore_remove_update_nag() {
 
 	/* get the current user information */
 	global $current_user;
@@ -218,3 +235,83 @@ function pxlcore_blog_public_warning() {
 }
 
 add_action( 'admin_notices', 'pxlcore_blog_public_warning' );
+
+/***************************************************************
+* Function pxlcore_update_scripts()
+* Adds scripts to the update page (update-core.php)
+***************************************************************/
+function pxlcore_update_scripts() {
+
+	/* load the global variable to see which admin page we are on */
+	global $pagenow;
+	
+	/* check whether the current admin page is the upate-core.php page */
+	if( $pagenow == 'update-core.php' ) {
+	
+		wp_enqueue_script( 'jquery' );
+		wp_register_script( 'pxlcore_sliding_div', plugins_url( 'js/slidingdiv-hook.js', __FILE__ ), 'jquery' );
+		wp_enqueue_script( 'pxlcore_sliding_div' );
+	
+	} // end if we are on update-core page
+	
+}
+
+add_action( 'admin_enqueue_scripts', 'pxlcore_update_scripts' );
+
+/***************************************************************
+* Function pxlcore_update_message()
+* Adds an admin notice the update-core.php page in the admin
+***************************************************************/
+function pxlcore_update_start() {
+	
+	/* load the global variable to see which admin page we are on */
+	global $pagenow;
+	
+	/* check whether the current admin page is the upate-core.php page */
+	if( $pagenow == 'update-core.php' ) {
+		
+		/* get the current user information */
+		global $current_user;
+		
+		/* get the current users ID and assign to variable */
+		$current_user = wp_get_current_user(); $current_user_id = $current_user->ID;
+		
+		/* if the current user ID is greater than 2 */
+		//if( $current_user_id > 2 ) {
+		
+			/* echo our message */ ?>
+			<div id="pxlcore-updates" class="wrap">
+			
+				<h2>Information About Upgrading - Proceed with Caution!</h2>
+			
+				<p>You have updates that can be added to WordPress. These updates will bring your site to the latest version of WordPress as well as making sure any plugins that your site runs are also up-to-date. Please be aware however that if you choose to update, there is a risk of your site not functioning correctly due to the new version of WordPress being incompatible with features of your site.</p>
+				<p>Pixel Junction highly recommend that you content us to complete the upgrade for you at a cost of £40 + VAT. We will make a copy of your site, using this to perform an update. Once we are happy that the update is successful and the site still functions as it should, we will then apply this update to your live site.</p>
+				<p>You can of course go ahead and apply the updates yourself, but please bare in mind the above information.</p>
+				
+				<p><span class="message button pxlcore-button"><a class="show_hide" href="#">Proceed with Upgrade</a></span></p>
+				
+			</div>
+			
+			<div id="pxlcore-updates-wrap">
+			
+			<?php
+		
+		//} // end if user is greater than 2
+		
+	} // end if we are on update-core page
+	
+}
+
+add_action( 'admin_notices', 'pxlcore_update_start' );
+
+/***************************************************************
+* Function pxlcore_update_core_preamble()
+* Adds output to the update-core.php page in the admin
+***************************************************************/
+function pxlcore_update_end() {
+	
+	echo '</div>';
+	
+}
+
+add_action( 'core_upgrade_preamble', 'pxlcore_update_end' );

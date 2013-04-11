@@ -1,0 +1,18 @@
+/* admin styles for pxlcore
+----------------------------------------------- */
+#pxlcore-updates {
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border-width: 1px;
+	border-style: solid;
+	background-color: #ffebe8;
+	border-color: #c00;
+	padding: 0 .6em;
+	margin: 35px 15px 0 0;
+}
+#pxlcore-updates-wrap {
+	display: none;
+}
+a.show_hide {
+	text-decoration: none;	
+}
