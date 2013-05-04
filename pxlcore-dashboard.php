@@ -89,6 +89,59 @@ function pxlcore_admin_footer_text () {
 add_filter('admin_footer_text', 'pxlcore_admin_footer_text');
 
 /***************************************************************
+* Function pxlcore_dashboard_content()
+* Pulls in the new dashboard page content from plugin file
+***************************************************************/
+function pxlcore_dashboard() {
+	
+	/* load plugin dashboard content file */
+	require_once dirname( __FILE__ ) . '/inc/pxlcore-dashboard-content.php';
+	
+}
+
+/***************************************************************
+* Function pxlcore_add_dashboard_home()
+* Adds a new page to use for the home page in admin
+***************************************************************/
+function pxlcore_add_dashboard_home() {
+	
+	/* if the current user is a pixel team member */
+	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+	
+		/* add a new menu item linking to our new dashboard page */
+	add_menu_page( 'Dashboard', 'Dashboard', 'edit_pages', 'pxlcore_dashboard', 'pxlcore_dashboard', plugins_url( 'pxlcore/images/home-icon.png' ), 1 );
+	
+	}
+	
+}
+
+add_action( 'admin_menu', 'pxlcore_add_dashboard_home' );
+
+/***************************************************************
+* Function pxlcore_change_login_landing()
+* Changing the page users are redirected to after logging in.
+***************************************************************/
+function pxlcore_change_login_landing( $redirect_to, $request_redirect_to, $user ) {
+	
+	/* if the current user is a pixel team member */
+	if( get_user_meta( $user->ID, 'pixel_member', true ) != 'yes' ) {
+	
+		/* return the url of our new dashboard page */
+		return admin_url( 'admin.php?page=pxlcore_dashboard' );
+	
+	/* if the current user is a pixel member */
+	} else {
+		
+		/* return the normal admin url */
+		return admin_url();
+		
+	} // end if type of user
+	
+}
+
+add_filter( 'login_redirect', 'pxlcore_change_login_landing', 100, 3 );
+
+/***************************************************************
 * Function pxlcore_plugin_mce_css()
 * Adds editor stylesheet from the theme folder
 ***************************************************************/
@@ -144,6 +197,8 @@ function pxlcore_remove_admin_menus() {
 	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
 	
 		/* remove menus that are not required */
+		remove_menu_page( 'index.php'); // removes the default admin dashboard home
+		remove_menu_page( 'seperator1'); // removes seperator under dashboard
 		remove_menu_page( 'tools.php');
 		remove_menu_page( 'plugins.php');
 		remove_menu_page( 'link-manager.php');
@@ -154,71 +209,12 @@ function pxlcore_remove_admin_menus() {
 		remove_submenu_page( 'options-general.php', 'options-privacy.php' );
 		remove_submenu_page( 'options-general.php', 'options-reading.php' );
 		remove_submenu_page( 'options-general.php', 'options-discussion.php' );
-	
-	} // end if user is not a pixel member
+
+	}
 	
 }
 
 add_action( 'admin_menu', 'pxlcore_remove_admin_menus', 999 );
-
-/***************************************************************
-* Function pxlcore_remove_dashboard_widgets()
-* Removes wordpress metaboxes from the dashboard home screen
-***************************************************************/
-function pxlcore_remove_dashboard_widgets() {
-	
-	/* initiate the global metaboxes variable */
-	global $wp_meta_boxes;
-	
-	/* remove the widgets by unsetting them from the array */
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']); // quick press widget
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']); // incoming links widget
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']); // plugins widget
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']); // recent drafts widget
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']); // primary rss box
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']); // secondary rss box
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']); // remove recent comments
-
-}
-
-add_action( 'wp_dashboard_setup', 'pxlcore_remove_dashboard_widgets' );
-
-/***************************************************************
-* Function pxlcore_dashboard_widget()
-* Builds a dashboard widget for site information. Looks for this
-* in the theme folder and if not present adds the default from
-* this plugin.
-***************************************************************/
-function pxlcore_dashboard_widget() {
-	
-	/* setup a template file to use for the dashboard widget */
-	$pxlcore_dashboard_widget_templatename = 'dashboard-widget.php';
-	
-	/* locate the template from above in the theme */
-	$pxlcore_dashboard_widget_path = locate_template( $pxlcore_dashboard_widget_templatename );
-	
-	/* check whether the theme has this template or not */
-	if( empty( $pxlcore_dashboard_widget_path ) ) {
-		
-		/* if the path is empty - lets load some default content from the plugin */
-		$pxlcore_dashboard_widget_path = dirname( __FILE__ ) . '/inc/dashboard-widget.php';
-		
-	}
-	
-	/* include the template file containig the widget content */
-	include_once( $pxlcore_dashboard_widget_path );
-}
-
-/***************************************************************
-* Function pxlcore_dashboard_setup()
-* Adds the dashboard widget to wordpress including settin the
-* title etc.
-***************************************************************/
-function pxlcore_dashboard_setup() {
-	wp_add_dashboard_widget( 'pxlcore_welcome_widget', __( 'Welcome to Your New Website', 'pxjn' ), 'pxlcore_dashboard_widget' );
-}
-
-add_action( 'wp_dashboard_setup', 'pxlcore_dashboard_setup' );
 
 /***************************************************************
 * Function pxlcore_pixel_profile_field()
