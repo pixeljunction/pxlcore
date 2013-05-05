@@ -36,3 +36,31 @@ a.show_hide {
 	}
 
 }
+
+/* pxlcore dashboard styles
+----------------------------------------------- */
+.pxclore-dashboard-content .col {
+	float: left;
+	display: inline;
+	margin-right: 4%;
+}
+.pxclore-dashboard-content .half-col {
+	width: 48%;
+}
+.pxclore-dashboard-content .last-col {
+	margin-right: 0;
+}
+h4.pxlcore-col-title {
+	text-shadow: 1px 1px 1px #fff;
+	margin: 0;
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+	font-size: 21px;
+	font-weight: normal;
+	line-height: 1.2;
+}
+
+/* general styles
+----------------------------------------------- */
+.clearfix {
+	clear: both;
+}

@@ -1,19 +1,39 @@
 <div class="wrap">
 	
-	<?php screen_icon( 'index' ); ?>
+	<?php
+		
+		/* show a screen icon next to the title - same one as the normal dashboard */
+		screen_icon( 'index' );
+	
+	?>
 	
 	<h2>Dashboard</h2>
-
-	<div id="welcome-panel" class="welcome-panel">
-
-		<div class="welcome-panel-content">
-		
-			<h3>Welcome to Your Website from Pixel Junction</h3>
-			
-			<p class="about-description">Pixel Junction would like to thank you for choosing to allow them to build your site.</p>
-		
-		</div><!-- // welcome-panel-content -->
 	
-	</div><!-- // welcome-panel -->
+	<?php
+		
+		/* include the dashboard content file from the theme if there is one */
+		get_template_part( 'dashboard', 'content' );
+		
+		/* get the pixel dashboard content file */
+		$pxlcore_dashboard_content = wp_remote_get( 'http://pixel.dev/dashboard.html' );
+		
+		/* check whether there is an error in the remote repsonse */
+		if( is_wp_error( $pxlcore_dashboard_content ) ) {
+			
+			/* get the error message from the repsonse */
+			$pxlcore_error_message = $pxlcore_dashboard_content->get_error_message();
+			
+			/* output the error */
+			echo "Something went wrong: $pxlcore_error_message";
+		
+		/* there is no error in the repsonse */
+		} else {
+			
+			/* out the body of the retreived page */
+			echo $pxlcore_dashboard_content[ 'body' ];
+			
+		}
+		
+	?>
 
 </div>
