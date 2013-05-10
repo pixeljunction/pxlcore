@@ -109,7 +109,7 @@ function pxlcore_add_dashboard_home() {
 	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
 	
 		/* add a new menu item linking to our new dashboard page */
-	add_menu_page( 'Dashboard', 'Dashboard', 'edit_pages', 'pxlcore_dashboard', 'pxlcore_dashboard', plugins_url( 'pxlcore/images/home-icon.png' ), 1 );
+	add_menu_page( 'Dashboard', 'Dashboard', 'edit_pages', 'pxlcore_dashboard', 'pxlcore_dashboard', content_url( 'mu-plugins/pxlcore/images/home-icon.png' ), 1 );
 	
 	}
 	
