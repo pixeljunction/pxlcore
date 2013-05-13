@@ -110,3 +110,23 @@ function pxlcore_widget_counter_classes( $params ) {
 }
 
 add_filter( 'dynamic_sidebar_params', 'pxlcore_widget_counter_classes' );
+
+/***************************************************************
+* Function pxlcore_filter_menu_class()
+* Filters the first and last nav menu objects in your menus
+* to add custom classes.
+***************************************************************/
+function pxlcore_filter_menu_class( $objects ) {
+ 
+    // Add "first-menu-item" class to the first menu object
+    $objects[1]->classes[] = 'first-menu-item';
+ 
+    // Add "last-menu-item" class to the last menu object
+    $objects[count( $objects )]->classes[] = 'last-menu-item';
+ 
+    // Return the menu objects
+    return $objects;
+ 
+}
+
+add_filter( 'wp_nav_menu_objects', 'pxlcore_filter_menu_class' );
