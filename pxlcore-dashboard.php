@@ -217,6 +217,27 @@ function pxlcore_remove_admin_menus() {
 add_action( 'admin_menu', 'pxlcore_remove_admin_menus', 999 );
 
 /***************************************************************
+* Function pxjn_alter_admin_bar()
+* Changes the admin bar for non pixel users.
+***************************************************************/
+function pxjn_alter_admin_bar() {
+
+	/* if the current user is not a pixel team member */
+	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+		
+		/* load the admin bar global variable */
+		global $wp_admin_bar;
+		
+		/* remove the updates admin bar item */
+		$wp_admin_bar->remove_menu( 'updates' );
+	
+	}
+
+}
+ 
+add_action( 'wp_before_admin_bar_render', 'pxjn_alter_admin_bar', 0 );
+
+/***************************************************************
 * Function pxlcore_remove_meta_boxes()
 * Removes unwanted metabox from the write post/page screens.
 ***************************************************************/
