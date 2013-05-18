@@ -217,6 +217,37 @@ function pxlcore_remove_admin_menus() {
 add_action( 'admin_menu', 'pxlcore_remove_admin_menus', 999 );
 
 /***************************************************************
+* Function pxlcore_remove_meta_boxes()
+* Removes unwanted metabox from the write post/page screens.
+***************************************************************/
+function pxlcore_remove_meta_boxes() {
+
+	/* if the current user is not a pixel team member */
+	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+	
+		remove_meta_box( 'postcustom' , 'post' , 'normal' );
+		remove_meta_box( 'commentsdiv' , 'post' , 'normal' );
+		remove_meta_box( 'commentstatusdiv' , 'post' , 'normal' );
+		remove_meta_box( 'slugdiv' , 'post' , 'normal' );
+		remove_meta_box( 'trackbacksdiv' , 'post' , 'normal' );
+		remove_meta_box( 'revisionsdiv' , 'post' , 'normal' );
+		remove_meta_box( 'tagsdiv-post_tag' , 'post' , 'normal' );
+		remove_meta_box( 'authordiv' , 'post' , 'normal' );
+		remove_meta_box( 'postcustom' , 'page' , 'normal' );
+		remove_meta_box( 'commentsdiv' , 'page' , 'normal' );
+		remove_meta_box( 'trackbacksdiv' , 'page' , 'normal' );
+		remove_meta_box( 'revisionsdiv' , 'page' , 'normal' );
+		remove_meta_box( 'commentstatusdiv' , 'page' , 'normal' );
+		remove_meta_box( 'authordiv' , 'page' , 'normal' );
+		remove_meta_box( 'slugdiv' , 'page' , 'normal' );
+	
+	}
+	
+}
+
+add_action('admin_menu', 'pxlcore_remove_meta_boxes');
+
+/***************************************************************
 * Function pxlcore_pixel_profile_field()
 * Adds additional field on the users profile page which makes
 * the user a member of team pixel!
