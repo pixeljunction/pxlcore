@@ -17,7 +17,7 @@ function pxlcore_local_dev_indicator() {
 	$pxlcore_server_name = $_SERVER[ 'SERVER_NAME' ];
 	
 	/* check whether server name contains pixeljunctiondemo.co.uk or local host */
-	if( strpos( $pxlcore_server_name, 'pixeljunctiondemo.co.uk' ) !== false || strpos( $pxlcore_server_name, 'localhost' ) !== false ) {
+	if( strpos( $pxlcore_server_name, 'pixeljunctiondemo.co.uk' ) !== false || strpos( $pxlcore_server_name, 'pixel.dev' ) !== false ) {
 		
 		/* add a menu to the admin bar */
 		$wp_admin_bar->add_menu(
