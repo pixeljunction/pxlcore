@@ -15,7 +15,7 @@
 		get_template_part( 'dashboard', 'content' );
 		
 		/* get the pixel dashboard content file */
-		$pxlcore_dashboard_content = wp_remote_get( 'http://pixel.dev/dashboard.html' );
+		$pxlcore_dashboard_content = wp_remote_get( 'http://content.pixeljunction.co.uk/dashboard.html' );
 		
 		/* check whether there is an error in the remote repsonse */
 		if( is_wp_error( $pxlcore_dashboard_content ) ) {
