@@ -93,9 +93,19 @@ add_filter('admin_footer_text', 'pxlcore_admin_footer_text');
 * Pulls in the new dashboard page content from plugin file
 ***************************************************************/
 function pxlcore_dashboard() {
+
+	/* check for a dashboard content file in the theme folder */
+	if( file_exists( STYLESHEETPATH . '/pxlcore-dashboard-content.php' ) ) {
+		
+		/* load the dashboard content file from the theme folder */
+		require_once STYLESHEETPATH . '/pxlcore-dashboard-content.php';
 	
-	/* load plugin dashboard content file */
-	require_once dirname( __FILE__ ) . '/inc/pxlcore-dashboard-content.php';
+	} else {
+		
+		/* load plugin dashboard content file */
+		require_once dirname( __FILE__ ) . '/inc/pxlcore-dashboard-content.php';
+		
+	}
 	
 }
 
@@ -140,25 +150,6 @@ function pxlcore_change_login_landing( $redirect_to, $request_redirect_to, $user
 }
 
 add_filter( 'login_redirect', 'pxlcore_change_login_landing', 100, 3 );
-
-/***************************************************************
-* Function pxlcore_plugin_mce_css()
-* Adds editor stylesheet from the theme folder
-***************************************************************/
-function pxlcore_plugin_mce_css( $mce_css ) {
-	
-	if ( ! empty( $mce_css ) )
-		$mce_css .= ',';
-	
-	/* set the path for the stylesheet in the theme folder */
-	$mce_css .= trailingslashit( get_stylesheet_directory_uri() . '/editor-style.css' );
-	
-	/* return the path to the stylesheet */
-	return $mce_css;
-	
-}
-
-add_filter( 'mce_css', 'pxlcore_plugin_mce_css' );
 
 /***************************************************************
 * Function pxlcore_login_logo()
