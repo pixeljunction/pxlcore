@@ -15,12 +15,6 @@ require_once dirname( __FILE__ ) . '/pxlcore-dashboard.php';
 /* load plugin counter functions for loops */
 require_once dirname( __FILE__ ) . '/pxlcore-counters.php';
 
-/* load plugin post types */
-require_once dirname( __FILE__ ) . '/pxlcore-post-types.php';
-
-/* load plugin taxonomies */
-require_once dirname( __FILE__ ) . '/pxlcore-taxonomies.php';
-
 /***************************************************************
 * Function pxlcore_post_class()
 * Allows a custom field of pxlcore_postclass to be added in
