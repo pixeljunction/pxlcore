@@ -80,9 +80,12 @@ add_filter( 'admin_bar_menu', 'pxlcore_howdy', 10, 2 );
 * Change the display text in the wordpress dashboard footer
 ***************************************************************/
 function pxlcore_admin_footer_text () {
-			
+	
 	/* the text we want to display in the footer */
-	echo "Site created by <a href='http://pixeljunction.co.uk'>Pixel Junction</a> using <a href='http://wordpress.org'>WordPress</a>";
+	$pxlcore_admin_footer_text = 'Site created by <a href="http://pixeljunction.co.uk">Pixel Junction</a> using <a href="http://wordpress.org">WordPress</a>';
+	
+	/* output this text, running through a filter first */
+	echo apply_filters( 'pxlcore_admin_footer_text', $pxlcore_admin_footer_text );
 	
 }
 
@@ -187,25 +190,67 @@ function pxlcore_remove_admin_menus() {
 	/* if the current user is not a pixel team member */
 	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
 	
-		/* remove menus that are not required */
-		remove_menu_page( 'index.php'); // removes the default admin dashboard home
-		remove_menu_page( 'seperator1'); // removes seperator under dashboard
-		remove_menu_page( 'tools.php');
-		remove_menu_page( 'plugins.php');
-		remove_menu_page( 'link-manager.php');
-		remove_submenu_page( 'themes.php', 'themes.php' );
-		remove_submenu_page( 'index.php', 'update-core.php' );
-		remove_submenu_page( 'options-general.php', 'options-media.php' );
-		remove_submenu_page( 'options-general.php', 'options-permalink.php' );
-		remove_submenu_page( 'options-general.php', 'options-privacy.php' );
-		remove_submenu_page( 'options-general.php', 'options-reading.php' );
-		remove_submenu_page( 'options-general.php', 'options-discussion.php' );
+		$pxlcore_remove_menu_items = apply_filters( 'pxlcore_remove_admin_menus', array(
+			'index.php',
+			'seperator1',
+			'tools.php',
+			'plugins.php',
+			'link-manager.php'
+		) );
+		
+		/* loop through each of the items from our array */
+		foreach( $pxlcore_remove_menu_items as $pxlcore_remove_menu_item ) {
+			
+			/* reomve the menu item */
+			remove_menu_page( $pxlcore_remove_menu_item );
+			
+		}
 
 	}
 	
 }
 
 add_action( 'admin_menu', 'pxlcore_remove_admin_menus', 999 );
+
+/***************************************************************
+* Function pxlcore_remove_admin_sub_menus()
+* Removes sub admin menus for no pixel junction team members
+***************************************************************/
+function pxlcore_remove_admin_sub_menus() {
+	
+	/* if the current user is not a pixel team member */
+	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+	
+		$pxlcore_remove_sub_menu_items = apply_filters( 'pxlcore_remove_admin_sub_menus',
+			array(
+				array( 'themes.php' => 'themes.php' ),
+				array( 'themes.php' => 'customize.php' ),
+				array( 'themes.php' => 'theme-editor.php' ),
+				array( 'index.php' => 'update-core.php' ),
+				array( 'options-general.php' => 'options-media.php' ),
+				array( 'options-general.php' => 'options-permalink.php' ),
+				array( 'options-general.php' => 'options-reading.php' ),
+				array( 'options-general.php' => 'options-discussion.php' )
+			)
+		);
+		
+		/* loop through each of the items in our array to remove */
+		foreach( $pxlcore_remove_sub_menu_items as $name => $sub_menu_items ) {
+			
+			/* loop through each of the items within out sub array */
+			foreach( $sub_menu_items as $parent => $child ) {
+				
+				remove_submenu_page( $parent, $child );	
+				
+			} // end inner foreach
+			
+		} // end foreach item
+		
+	} // end if pixel member
+	
+}
+
+add_action( 'admin_menu', 'pxlcore_remove_admin_sub_menus', 999 );
 
 /***************************************************************
 * Function pxjn_alter_admin_bar()
