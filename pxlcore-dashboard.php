@@ -474,9 +474,21 @@ function pxlcore_blog_public_warning() {
 	if( $pxlcore_blog_public == 0 ) {
 	
 		?>
+	    
 	    <div class="error">
-	        <p>Search engines are currently being prevented to indexing this site. Please correct this once the site goes live.</p>
+	        
+	        <?php
+	        	
+	        	/* set the warning message */
+	        	$pxlcore_blog_public_warning = '<p>Search engines are currently being prevented to indexing this site. Please correct this once the site goes live.</p>';
+	        	
+	        	/* output the warning message, after passing through a filter to allow devs to change */
+	        	echo apply_filters( 'pxlcore_blog_public_warning', $pxlcore_blog_public_warning );
+	        
+	        ?>
+	        	
 	    </div>
+	    
 	    <?php
 	
 	}
