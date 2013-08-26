@@ -282,22 +282,94 @@ function pxlcore_remove_meta_boxes() {
 	/* if the current user is not a pixel team member */
 	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
 	
-		remove_meta_box( 'postcustom' , 'post' , 'normal' );
-		remove_meta_box( 'commentsdiv' , 'post' , 'normal' );
-		remove_meta_box( 'commentstatusdiv' , 'post' , 'normal' );
-		remove_meta_box( 'slugdiv' , 'post' , 'normal' );
-		remove_meta_box( 'trackbacksdiv' , 'post' , 'normal' );
-		remove_meta_box( 'revisionsdiv' , 'post' , 'normal' );
-		remove_meta_box( 'tagsdiv-post_tag' , 'post' , 'normal' );
-		remove_meta_box( 'authordiv' , 'post' , 'normal' );
-		remove_meta_box( 'postcustom' , 'page' , 'normal' );
-		remove_meta_box( 'commentsdiv' , 'page' , 'normal' );
-		remove_meta_box( 'trackbacksdiv' , 'page' , 'normal' );
-		remove_meta_box( 'revisionsdiv' , 'page' , 'normal' );
-		remove_meta_box( 'commentstatusdiv' , 'page' , 'normal' );
-		remove_meta_box( 'authordiv' , 'page' , 'normal' );
-		remove_meta_box( 'slugdiv' , 'page' , 'normal' );
-	
+		$remove_metaboxes = apply_filters( 'pxlcore_remove_metaboxes',
+			array(
+				array(
+					'id' => 'postcustom',
+					'page' => 'post',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'commentsdiv',
+					'page' => 'post',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'commentstatusdiv',
+					'page' => 'post',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'slugdiv',
+					'page' => 'post',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'trackbacksdiv',
+					'page' => 'post',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'revisionsdiv',
+					'page' => 'post',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'tagsdiv-post_tag',
+					'page' => 'post',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'authordiv',
+					'page' => 'post',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'postcustom',
+					'page' => 'page',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'commentsdiv',
+					'page' => 'page',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'trackbacksdiv',
+					'page' => 'page',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'revisionsdiv',
+					'page' => 'page',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'commentstatusdiv',
+					'page' => 'page',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'authordiv',
+					'page' => 'page',
+					'context' => 'normal'
+				),
+				array(
+					'id' => 'slugdiv',
+					'page' => 'page',
+					'context' => 'normal'
+				),
+			)
+		);
+		
+		/* loop through each meta box item to remove */
+		foreach( $remove_metaboxes as $remove_metabox ) {
+			
+			/* remove each metabox from the array */
+			remove_meta_box( $remove_metabox[ 'id' ], $remove_metabox[ 'page' ] , $remove_metabox[ 'context' ] );
+							
+		}
+		
 	}
 	
 }
