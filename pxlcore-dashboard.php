@@ -223,26 +223,50 @@ function pxlcore_remove_admin_sub_menus() {
 	
 		$pxlcore_remove_sub_menu_items = apply_filters( 'pxlcore_remove_admin_sub_menus',
 			array(
-				array( 'themes.php' => 'themes.php' ),
-				array( 'themes.php' => 'customize.php' ),
-				array( 'themes.php' => 'theme-editor.php' ),
-				array( 'index.php' => 'update-core.php' ),
-				array( 'options-general.php' => 'options-media.php' ),
-				array( 'options-general.php' => 'options-permalink.php' ),
-				array( 'options-general.php' => 'options-reading.php' ),
-				array( 'options-general.php' => 'options-discussion.php' )
+				array(
+					'parent' => 'themes.php',
+					'child' => 'themes.php'
+				),
+				array(
+					'parent' => 'themes.php',
+					'child' => 'customize.php'
+				),
+				array(
+					'parent' => 'themes.php',
+					'child' => 'theme-editor.php'
+				),
+				array(
+					'parent' => 'themes.php',
+					'child' => 'update-core.php'
+				),
+				array(
+					'parent' => 'options-general.php',
+					'child' => 'options-media.php'
+				),
+				array(
+					'parent' => 'options-general.php',
+					'child' => 'options-permalink.php'
+				),
+				array(
+					'parent' => 'options-general.php',
+					'child' => 'options-reading.php'
+				),
+				array(
+					'parent' => 'options-general.php',
+					'child' => 'options-discussion.php'
+				),
 			)
 		);
 		
 		/* loop through each of the items in our array to remove */
-		foreach( $pxlcore_remove_sub_menu_items as $name => $sub_menu_items ) {
+		foreach( $pxlcore_remove_sub_menu_items as $pxlcore_remove_sub_menu_item ) {
 			
 			/* loop through each of the items within out sub array */
-			foreach( $sub_menu_items as $parent => $child ) {
+			//foreach( $sub_menu_items as $parent => $child ) {
 				
-				remove_submenu_page( $parent, $child );	
+				remove_submenu_page( $pxlcore_remove_sub_menu_item[ 'parent'], $pxlcore_remove_sub_menu_item[ 'child' ] );	
 				
-			} // end inner foreach
+			//} // end inner foreach
 			
 		} // end foreach item
 		
