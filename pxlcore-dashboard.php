@@ -17,7 +17,7 @@ function pxlcore_local_dev_indicator() {
 	$pxlcore_server_name = $_SERVER[ 'SERVER_NAME' ];
 	
 	/* check whether server name contains pixeljunctiondemo.co.uk or local host */
-	if( strpos( $pxlcore_server_name, 'pixeljunctiondemo.co.uk' ) !== false || strpos( $pxlcore_server_name, 'pixel.dev' ) !== false ) {
+	if( strpos( $pxlcore_server_name, apply_filters( 'staging_url', 'pixeljunctiondemo.co.uk' ) ) !== false || strpos( $pxlcore_server_name, apply_filters( 'local_url', 'pixel.dev' ) ) !== false ) {
 		
 		/* add a menu to the admin bar */
 		$wp_admin_bar->add_menu(
@@ -122,7 +122,7 @@ function pxlcore_add_dashboard_home() {
 	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
 	
 		/* add a new menu item linking to our new dashboard page */
-	add_menu_page( 'Dashboard', 'Dashboard', 'edit_pages', 'pxlcore_dashboard', 'pxlcore_dashboard', content_url( 'mu-plugins/pxlcore/images/home-icon.png' ), 1 );
+		add_menu_page( 'Dashboard', 'Dashboard', 'edit_pages', 'pxlcore_dashboard', 'pxlcore_dashboard', content_url( 'mu-plugins/pxlcore/images/home-icon.png' ), 1 );
 	
 	}
 	
@@ -538,7 +538,7 @@ function pxlcore_update_start() {
 			echo '<div id="pxlcore-updates" class="wrap">';
 			
 				/* setup a template file to use for the dashboard widget */
-				$pxlcore_update_warning_templatename = 'update-warning.php';
+				$pxlcore_update_warning_templatename = 'pxlcore-update-warning.php';
 				
 				/* locate the template from above in the theme */
 				$pxlcore_update_warning_path = locate_template( $pxlcore_update_warning_templatename );
