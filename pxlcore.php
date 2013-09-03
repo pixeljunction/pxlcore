@@ -10,7 +10,7 @@ License: GPLv2 or later
 */
 
 /* make the theme updateable using wp-updates.com */
-require_once( 'wp-updates-plugin.php' );
+require_once dirname( __FILE__ ) . '/wp-updates-plugin.php';
 new WPUpdatesPluginUpdater( 'http://wp-updates.com/api/1/plugin', 217, plugin_basename( __FILE__ ) );
 
 /* load plugin dashboard functions */
