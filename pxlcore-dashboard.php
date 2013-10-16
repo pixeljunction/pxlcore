@@ -163,13 +163,20 @@ function pxlcore_login_logo() {
 
 	/* check whether a login logo exists in the child theme */
 	if( file_exists( STYLESHEETPATH . '/images/login-logo.png' ) ) {
+	
+		$pxlcore_login_logo_sizes = apply_filters( 'pxlcore_login_logo_sizes',
+            array(
+                'width' => '300',
+                'height' => '100'
+            )
+        );
 		
 		echo '
 			<style>
 			.login h1 a {
 				background-image: url('.get_stylesheet_directory_uri() . '/images/login-logo.png);
-				background-size: 300px 100px;
-				height: 100px;
+				background-size: ' . $pxlcore_login_logo_sizes[ 'width' ] . 'px' . ' ' . $pxlcore_login_logo_sizes[ 'height' ] . 'px;
+				height: ' . $pxlcore_login_logo_sizes[ 'height' ] . 'px;
 			}
 			</style>
 		';
