@@ -1,4 +1,4 @@
-![pxlcore logo](http://markwilkinson.me/wp-content/uploads/2012/11/pxlcore-logo-github.jpg)
+![pxlcore logo](http://content.pixeljunction.co.uk/assets/plugin-logos/pxl-core.jpg)
 
 # Pixel Core
 
