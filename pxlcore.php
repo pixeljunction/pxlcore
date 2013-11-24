@@ -228,3 +228,24 @@ function pxlcore_featured_img_title( $pxlcore_before, $pxlcore_after ) {
 	} // end if we have a post
 
 }
+
+/***************************************************************
+* Function pxlcore_var_dump()
+* Creates prettier version of the var_dump() php function.
+***************************************************************/
+function pxlcore_var_dump( $data, $label = '' ) {
+
+	/* check whether we have been provided with a label */
+	if( ! empty( $label ) ) {
+		
+		/* output our label as a heading */
+		echo '<h2>' . $label . '</h2>';
+		
+	}
+	
+	/* output the normal var_dump wrapped in <pre> for formatting */
+	echo '<pre>'; var_dump( $data ); echo '</pre><hr>';
+	
+	return;
+
+}
