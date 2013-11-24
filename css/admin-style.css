@@ -39,6 +39,9 @@ a.show_hide {
 
 /* pxlcore dashboard styles
 ----------------------------------------------- */
+body.toplevel_page_pxlcore_dashboard .welcome-panel {
+	padding-bottom: 23px;
+}
 .welcome-panel-content {
 	margin-bottom: 15px;
 }
