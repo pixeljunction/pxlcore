@@ -202,7 +202,8 @@ function pxlcore_remove_admin_menus() {
 			'seperator1',
 			'tools.php',
 			'plugins.php',
-			'link-manager.php'
+			'link-manager.php',
+			'edit-comments.php'
 		) );
 		
 		/* loop through each of the items from our array */
