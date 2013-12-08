@@ -587,3 +587,48 @@ function pxlcore_update_end() {
 }
 
 add_action( 'core_upgrade_preamble', 'pxlcore_update_end' );
+
+/***************************************************************
+* Function pxlcore_remove_widgets()
+* Removes some of the standard widgets that are hardly used.
+***************************************************************/
+function pxlcore_remove_widgets() {
+	
+	/* build a nested array of widgets to remove, filterable by plugins and themes */
+	$pxlcore_widgets = apply_filters( 'pxlcore_remove_widgets',
+		array(
+			array(
+				'widget' => 'WP_Widget_Links'
+			),
+			array(
+				'widget' => 'WP_Widget_Calendar',
+			),
+			array(
+				'widget' => 'WP_Widget_RSS',
+			),
+			array(
+				'widget' => 'WP_Widget_Meta',
+			),
+			array(
+				'widget' => 'WP_Widget_Tag_Cloud',
+			),
+			array(
+				'widget' => 'WP_Widget_Recent_Comments',
+			),
+			array(
+				'widget' => 'WP_Widget_Search',
+			),
+		)
+	);
+	
+	/* loop through each widget in the array */
+	foreach( $pxlcore_widgets as $pxlcore_widget ) {
+		
+		/* remove the widget */
+		unregister_widget( $pxlcore_widget[ 'widget' ] );
+		
+	}
+	
+}
+
+add_action( 'widgets_init', 'pxlcore_remove_widgets' );
