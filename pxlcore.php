@@ -18,6 +18,10 @@ require_once dirname( __FILE__ ) . '/pxlcore-counters.php';
 /* load plugin counter functions for loops */
 require_once dirname( __FILE__ ) . '/metaboxes/custom-meta-boxes.php';
 
+/* make theme updatable using wp-updates.com */
+require_once( 'wp-updates-plugin.php' );
+new WPUpdatesPluginUpdater_348( 'http://wp-updates.com/api/2/plugin', plugin_basename( __FILE__ ) );
+
 /***************************************************************
 * Function pxlcore_post_class()
 * Allows a custom field of pxlcore_postclass to be added in
