@@ -177,6 +177,7 @@ function pxlcore_login_logo() {
 				background-image: url('.get_stylesheet_directory_uri() . '/images/login-logo.png);
 				background-size: ' . $pxlcore_login_logo_sizes[ 'width' ] . 'px' . ' ' . $pxlcore_login_logo_sizes[ 'height' ] . 'px;
 				height: ' . $pxlcore_login_logo_sizes[ 'height' ] . 'px;
+				width: ' . $pxlcore_login_logo_sizes[ 'width' ] . 'px;
 			}
 			</style>
 		';
