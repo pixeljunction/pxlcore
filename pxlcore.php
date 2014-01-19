@@ -20,7 +20,7 @@ require_once dirname( __FILE__ ) . '/metaboxes/custom-meta-boxes.php';
 
 /* make theme updatable using wp-updates.com */
 require_once( 'wp-updates-plugin.php' );
-new WPUpdatesPluginUpdater_348( 'http://wp-updates.com/api/2/plugin', plugin_basename( __FILE__ ) );
+new WPUpdatesPluginUpdater_361( 'http://wp-updates.com/api/2/plugin', plugin_basename( __FILE__ ) );
 
 /***************************************************************
 * Function pxlcore_post_class()
