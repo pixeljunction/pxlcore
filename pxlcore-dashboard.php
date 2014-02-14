@@ -407,7 +407,7 @@ function pxlcore_remove_meta_boxes() {
 	
 }
 
-add_action('admin_menu', 'pxlcore_remove_meta_boxes');
+add_action( 'do_meta_boxes', 'pxlcore_remove_meta_boxes');
 
 /***************************************************************
 * Function pxlcore_pixel_profile_field()
