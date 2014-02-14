@@ -140,13 +140,13 @@ function pxlcore_change_login_landing( $redirect_to, $request_redirect_to, $user
 	if( get_user_meta( $user->ID, 'pixel_member', true ) != 'yes' ) {
 	
 		/* return the url of our new dashboard page */
-		return admin_url( 'admin.php?page=pxlcore_dashboard' );
+		return apply_filters( 'pxlcore_login_redirect', admin_url( 'admin.php?page=pxlcore_dashboard' ) );
 	
 	/* if the current user is a pixel member */
 	} else {
 		
 		/* return the normal admin url */
-		return admin_url();
+		return apply_filters( 'pxlcore_pixelmember_login_redirect', admin_url() );
 		
 	} // end if type of user
 	
