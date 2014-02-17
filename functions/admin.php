@@ -37,22 +37,6 @@ function pxlcore_local_dev_indicator() {
 add_action( 'wp_before_admin_bar_render', 'pxlcore_local_dev_indicator' );
 
 /***************************************************************
-* Function pxlcore_admin_css()
-* Adds css stylesheet to head in all admin pages
-***************************************************************/
-function pxlcore_admin_css() {
-	
-	/* register the stylesheet */
-    wp_register_style( 'pxlcore_admin_css', plugins_url( 'css/admin-style.css', __FILE__ ) );
-    
-    /* enqueue the stylsheet */
-    wp_enqueue_style( 'pxlcore_admin_css' );
-    
-}
-
-add_action( 'admin_enqueue_scripts', 'pxlcore_admin_css' );
-
-/***************************************************************
 * Function pxlcore_howdy()
 * Change Howdy? in the admin bar
 ***************************************************************/
@@ -91,44 +75,6 @@ function pxlcore_admin_footer_text () {
 
 add_filter('admin_footer_text', 'pxlcore_admin_footer_text');
 
-/***************************************************************
-* Function pxlcore_dashboard_content()
-* Pulls in the new dashboard page content from plugin file
-***************************************************************/
-function pxlcore_dashboard() {
-
-	/* check for a dashboard content file in the theme folder */
-	if( file_exists( STYLESHEETPATH . '/pxlcore-dashboard-content.php' ) ) {
-		
-		/* load the dashboard content file from the theme folder */
-		require_once STYLESHEETPATH . '/pxlcore-dashboard-content.php';
-	
-	} else {
-		
-		/* load plugin dashboard content file */
-		require_once dirname( __FILE__ ) . '/inc/pxlcore-dashboard-content.php';
-		
-	}
-	
-}
-
-/***************************************************************
-* Function pxlcore_add_dashboard_home()
-* Adds a new page to use for the home page in admin
-***************************************************************/
-function pxlcore_add_dashboard_home() {
-	
-	/* if the current user is a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
-	
-		/* add a new menu item linking to our new dashboard page */
-		add_menu_page( 'Dashboard', 'Dashboard', 'edit_posts', 'pxlcore_dashboard', 'pxlcore_dashboard', plugins_url( 'images/home-icon.png', __FILE__ ), 1 );
-	
-	}
-	
-}
-
-add_action( 'admin_menu', 'pxlcore_add_dashboard_home' );
 
 /***************************************************************
 * Function pxlcore_change_login_landing()
@@ -188,102 +134,6 @@ function pxlcore_login_logo() {
 	
 
 add_action( 'login_head', 'pxlcore_login_logo' );
-
-/***************************************************************
-* Function pxlcore_remove_admin_menus()
-* Removes admin menus for no pixel junction team members
-***************************************************************/
-function pxlcore_remove_admin_menus() {
-
-	/* if the current user is not a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
-	
-		$pxlcore_remove_menu_items = apply_filters( 'pxlcore_remove_admin_menus', array(
-			'index.php',
-			'seperator1',
-			'tools.php',
-			'plugins.php',
-			'link-manager.php',
-			'edit-comments.php'
-		) );
-		
-		/* loop through each of the items from our array */
-		foreach( $pxlcore_remove_menu_items as $pxlcore_remove_menu_item ) {
-			
-			/* reomve the menu item */
-			remove_menu_page( $pxlcore_remove_menu_item );
-			
-		}
-
-	}
-	
-}
-
-add_action( 'admin_menu', 'pxlcore_remove_admin_menus', 999 );
-
-/***************************************************************
-* Function pxlcore_remove_admin_sub_menus()
-* Removes sub admin menus for no pixel junction team members
-***************************************************************/
-function pxlcore_remove_admin_sub_menus() {
-	
-	/* if the current user is not a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
-	
-		$pxlcore_remove_sub_menu_items = apply_filters( 'pxlcore_remove_admin_sub_menus',
-			array(
-				array(
-					'parent' => 'themes.php',
-					'child' => 'themes.php'
-				),
-				array(
-					'parent' => 'themes.php',
-					'child' => 'customize.php'
-				),
-				array(
-					'parent' => 'themes.php',
-					'child' => 'theme-editor.php'
-				),
-				array(
-					'parent' => 'themes.php',
-					'child' => 'update-core.php'
-				),
-				array(
-					'parent' => 'options-general.php',
-					'child' => 'options-media.php'
-				),
-				array(
-					'parent' => 'options-general.php',
-					'child' => 'options-permalink.php'
-				),
-				array(
-					'parent' => 'options-general.php',
-					'child' => 'options-reading.php'
-				),
-				array(
-					'parent' => 'options-general.php',
-					'child' => 'options-discussion.php'
-				),
-			)
-		);
-		
-		/* loop through each of the items in our array to remove */
-		foreach( $pxlcore_remove_sub_menu_items as $pxlcore_remove_sub_menu_item ) {
-			
-			/* loop through each of the items within out sub array */
-			//foreach( $sub_menu_items as $parent => $child ) {
-				
-				remove_submenu_page( $pxlcore_remove_sub_menu_item[ 'parent'], $pxlcore_remove_sub_menu_item[ 'child' ] );	
-				
-			//} // end inner foreach
-			
-		} // end foreach item
-		
-	} // end if pixel member
-	
-}
-
-add_action( 'admin_menu', 'pxlcore_remove_admin_sub_menus', 999 );
 
 /***************************************************************
 * Function pxjn_alter_admin_bar()
@@ -519,7 +369,7 @@ function pxlcore_update_scripts() {
 	if( $pagenow == 'update-core.php' ) {
 	
 		wp_enqueue_script( 'jquery' );
-		wp_register_script( 'pxlcore_sliding_div', plugins_url( 'js/slidingdiv-hook.js', __FILE__ ), 'jquery' );
+		wp_register_script( 'pxlcore_sliding_div', plugins_url( 'js/slidingdiv-hook.js', dirname( __FILE__ ) ), 'jquery' );
 		wp_enqueue_script( 'pxlcore_sliding_div' );
 	
 	} // end if we are on update-core page
@@ -527,6 +377,22 @@ function pxlcore_update_scripts() {
 }
 
 add_action( 'admin_enqueue_scripts', 'pxlcore_update_scripts' );
+
+/***************************************************************
+* Function pxlcore_admin_css()
+* Adds css stylesheet to head in all admin pages
+***************************************************************/
+function pxlcore_admin_css() {
+	
+	/* register the stylesheet */
+    wp_register_style( 'pxlcore_admin_css', plugins_url( 'css/admin-style.css', dirname( __FILE__ ) ) );
+    
+    /* enqueue the stylsheet */
+    wp_enqueue_style( 'pxlcore_admin_css' );
+    
+}
+
+add_action( 'admin_enqueue_scripts', 'pxlcore_admin_css' );
 
 /***************************************************************
 * Function pxlcore_update_message()
@@ -556,7 +422,7 @@ function pxlcore_update_start() {
 				if( empty( $pxlcore_update_warning_path ) ) {
 					
 					/* if the path is empty - lets load some default content from the plugin */
-					$pxlcore_update_warning_path = dirname( __FILE__ ) . '/inc/update-warning.php';
+					$pxlcore_update_warning_path = PXLCORE_LOCATION . '/inc/update-warning.php';
 					
 				}
 				
