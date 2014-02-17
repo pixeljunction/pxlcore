@@ -1,3 +1,9 @@
+/* post type icons
+----------------------------------------------------------------------*/
+#adminmenu #toplevel_page_pxlcore_dashboard div.wp-menu-image::before {
+	content: "\f226";
+}
+
 /* admin styles for pxlcore
 ----------------------------------------------- */
 #pxlcore-updates {

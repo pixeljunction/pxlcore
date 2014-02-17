@@ -36,7 +36,7 @@ function pxlcore_add_dashboard_home() {
 			'edit_posts',
 			'pxlcore_dashboard',
 			'pxlcore_dashboard',
-			plugins_url( 'images/home-icon.png', dirname( __FILE__ ) ),
+			'div',
 			1
 		);
 	
