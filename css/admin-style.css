@@ -3,6 +3,9 @@
 #adminmenu #toplevel_page_pxlcore_dashboard div.wp-menu-image::before {
 	content: "\f226";
 }
+#adminmenu #toplevel_page_pxlcore_site_options div.wp-menu-image::before {
+	content: "\f108";
+}
 
 /* admin styles for pxlcore
 ----------------------------------------------- */

@@ -18,6 +18,9 @@ require_once dirname( __FILE__ ) . '/functions/admin.php';
 /* load plugin admin menu functions */
 require_once dirname( __FILE__ ) . '/functions/admin-menus.php';
 
+/* load plugin admin menu content functions */
+require_once dirname( __FILE__ ) . '/functions/admin-menus-content.php';
+
 /* load plugin counter functions for loops */
 require_once dirname( __FILE__ ) . '/functions/counters.php';
 

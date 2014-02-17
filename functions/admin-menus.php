@@ -47,6 +47,32 @@ function pxlcore_add_dashboard_home() {
 add_action( 'admin_menu', 'pxlcore_add_dashboard_home' );
 
 /***************************************************************
+* Function pxlcore_add_site_options()
+* Adds a new menu item for the site options.
+***************************************************************/
+function pxlcore_add_site_options() {
+	
+	/* if the current user is a pixel team member */
+	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+	
+		/* add a new menu item linking to our new dashboard page */
+		add_menu_page(
+			'Site Options',
+			'Site Options',
+			'edit_posts',
+			'pxlcore_site_options',
+			'pxlcore_site_options_content',
+			'div',
+			99
+		);
+	
+	}
+	
+}
+
+add_action( 'admin_menu', 'pxlcore_add_site_options' );
+
+/***************************************************************
 * Function pxlcore_remove_admin_menus()
 * Removes admin menus for no pixel junction team members
 ***************************************************************/
@@ -106,18 +132,18 @@ function pxlcore_remove_admin_sub_menus() {
 					'parent' => 'themes.php',
 					'child' => 'update-core.php'
 				),
+				array(
+					'parent' => 'themes.php',
+					'child' => 'edit-tags.php?taxonomy=whistle_group&amp;post_type=whistle'
+				),
 			)
 		);
 		
 		/* loop through each of the items in our array to remove */
 		foreach( $pxlcore_remove_sub_menu_items as $pxlcore_remove_sub_menu_item ) {
-			
-			/* loop through each of the items within out sub array */
-			//foreach( $sub_menu_items as $parent => $child ) {
 				
-				remove_submenu_page( $pxlcore_remove_sub_menu_item[ 'parent'], $pxlcore_remove_sub_menu_item[ 'child' ] );	
-				
-			//} // end inner foreach
+			/* remove the sub menu item */
+			remove_submenu_page( $pxlcore_remove_sub_menu_item[ 'parent'], $pxlcore_remove_sub_menu_item[ 'child' ] );	
 			
 		} // end foreach item
 		
