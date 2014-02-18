@@ -29,7 +29,7 @@ require_once dirname( __FILE__ ) . '/functions/template-tags.php';
 
 /* load plugin counter functions for loops */
 require_once dirname( __FILE__ ) . '/metaboxes/custom-meta-boxes.php';
-
+	
 /* make theme updatable using wp-updates.com */
 require_once( 'wp-updates-plugin.php' );
 new WPUpdatesPluginUpdater_361( 'http://wp-updates.com/api/2/plugin', plugin_basename( __FILE__ ) );
