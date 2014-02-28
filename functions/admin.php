@@ -500,3 +500,31 @@ function pxlcore_remove_widgets() {
 }
 
 add_action( 'widgets_init', 'pxlcore_remove_widgets' );
+
+/***************************************************************
+* Function pxlcore_register_settings()
+* Register the settings for this plugin. Just a username and a
+* password for authenticating.
+***************************************************************/
+function pxlcore_register_settings() {
+	
+	/* create an array of the default settings, making it filterable */
+	$pxlcore_registered_settings = apply_filters(
+		'pxlcore_register_site_option_settings',
+		array(
+			'pxlcore_contact_email',
+			'pxlcore_tel_no',
+		)
+	);
+	
+	/* loop through each setting to register */
+	foreach( $pxlcore_registered_settings as $pxlcore_registered_setting ) {
+		
+		/* register the setting */
+		register_setting( 'pxlcore_site_options', $pxlcore_registered_setting );
+		
+	}
+
+}
+
+add_action( 'admin_init', 'pxlcore_register_settings' );
