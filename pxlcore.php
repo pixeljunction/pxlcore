@@ -27,8 +27,13 @@ require_once dirname( __FILE__ ) . '/functions/counters.php';
 /* load plugin template tags */
 require_once dirname( __FILE__ ) . '/functions/template-tags.php';
 
-/* load plugin counter functions for loops */
-require_once dirname( __FILE__ ) . '/metaboxes/custom-meta-boxes.php';
+/* check whether the metabox class already exists */
+if( ! class_exists( 'CMB_Meta_Box' ) ) {
+
+	/* load plugin counter functions for loops */
+	require_once dirname( __FILE__ ) . '/metaboxes/custom-meta-boxes.php';
+
+}
 	
 /* make theme updatable using wp-updates.com */
 require_once( 'wp-updates-plugin.php' );
