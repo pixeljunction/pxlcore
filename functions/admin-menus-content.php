@@ -11,9 +11,10 @@ function pxlcore_site_options_content() {
 		
 		<h2>Site Options</h2>
 		
-		<p>Below you can set some basic options for your site. Some of these options are used to display content on the front end, for example your telephone number may appear depending on your design.</p>
-		
 		<?php
+		
+			/* output filterable intro text */
+			echo apply_filters( 'pxlcore_site_option_intro', '<p>Below you can set some basic options for your site. Some of these options are used to display content on the front end, for example your telephone number may appear depending on your design.</p>' );
 
 			/* do before settings page action */
 			do_action( 'pxlcore_after_site_options_form' );
