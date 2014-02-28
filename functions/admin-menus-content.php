@@ -100,7 +100,7 @@ function pxlcore_site_options_content() {
 								),*/
 							)
 						);
-						pxlcore_var_dump( $pxlcore_site_option_settings );
+
 						/* check we have settings items to output */
 						if( ! empty( $pxlcore_site_option_settings ) ) {
 							
