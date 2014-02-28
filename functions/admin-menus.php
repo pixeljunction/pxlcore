@@ -132,10 +132,6 @@ function pxlcore_remove_admin_sub_menus() {
 					'parent' => 'themes.php',
 					'child' => 'update-core.php'
 				),
-				array(
-					'parent' => 'themes.php',
-					'child' => 'edit-tags.php?taxonomy=whistle_group&amp;post_type=whistle'
-				),
 			)
 		);
 		
