@@ -64,19 +64,19 @@ function pxlcore_site_options_content() {
 						$pxlcore_site_option_settings = apply_filters(
 							'pxlcore_site_option_settings',
 							array(
-								array(
+								'pxlcore_content_email' => array(
 									'setting_name' => 'pxlcore_contact_email',
 									'setting_label' => 'Contact Email',
 									'setting_description' => 'Enter a contact email here, this may be used on the site for people to get in touch with you.',
 									'setting_type' => 'text',
 								),
-								array(
+								'pxlcore_tel_no' => array(
 									'setting_name' => 'pxlcore_tel_no',
 									'setting_label' => 'Telephone Number',
 									'setting_description' => 'Please enter your contact telephone number here, which may be displayed on the site depending on your design.',
 									'setting_type' => 'text',
 								),
-								array(
+								'pxlcore_footer_text' => array(
 									'setting_name' => 'pxlcore_footer_text',
 									'setting_label' => 'Footer Text',
 									'setting_description' => 'Enter text here to display in the footer of your site. You could include a Copyright notice for example.',
@@ -100,7 +100,7 @@ function pxlcore_site_options_content() {
 								),*/
 							)
 						);
-						
+						pxlcore_var_dump( $pxlcore_site_option_settings );
 						/* check we have settings items to output */
 						if( ! empty( $pxlcore_site_option_settings ) ) {
 							
