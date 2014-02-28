@@ -11,6 +11,8 @@ function pxlcore_site_options_content() {
 		
 		<h2>Site Options</h2>
 		
+		<p>Below you can set some basic options for your site. Some of these options are used to display content on the front end, for example your telephone number may appear depending on your design.</p>
+		
 		<?php
 
 			/* do before settings page action */
@@ -72,6 +74,12 @@ function pxlcore_site_options_content() {
 									'setting_label' => 'Telephone Number',
 									'setting_description' => 'Please enter your contact telephone number here, which may be displayed on the site depending on your design.',
 									'setting_type' => 'text',
+								),
+								array(
+									'setting_name' => 'pxlcore_footer_text',
+									'setting_label' => 'Footer Text',
+									'setting_description' => 'Enter text here to display in the footer of your site. You could include a Copyright notice for example.',
+									'setting_type' => 'wysiwyg',
 								),
 								/*array(
 									'setting_name' => 'pxlcore_select_test',
@@ -137,16 +145,32 @@ function pxlcore_site_options_content() {
 											        
 											        /* break out of the switch statement */
 											        break;
-											    
+											    											    
 											    /* if the type is set to a textarea input */  
 											    case 'textarea':
 											    	
 											    	?>
-											        <textarea name="<?php echo $pxlcore_site_option_setting[ 'setting_name' ]; ?>" rows="4" cols="50" id="<?php echo $pxlcore_site_option_setting[ 'setting_name' ]; ?>" class="regular-text" value="<?php echo get_option( $pxlcore_site_option_setting[ 'setting_name' ] ) ?>"></textarea>
+											        <textarea name="<?php echo $pxlcore_site_option_setting[ 'setting_name' ]; ?>" rows="4" cols="50" id="<?php echo $pxlcore_site_option_setting[ 'setting_name' ]; ?>" class="regular-text"><?php echo get_option( $pxlcore_site_option_setting[ 'setting_name' ] ) ?></textarea>
 											        <?php
 											        
 											        /* break out of the switch statement */
 											        break;
+											       
+											    case 'wysiwyg':
+											    											    	
+											    	/* set some settings args for the editor */
+											    	$pxlcore_editor_settings = array(
+											    		'textarea_rows' => 5,
+											    		'media_buttons' => false,
+											    	);
+											    	
+											    	/* get current content for the wysiwyg */
+											    	$pxlcore_wysiwyg_content = get_option( $pxlcore_site_option_setting[ 'setting_name' ] );
+											    	
+											    	/* display the wysiwyg editor */
+											    	wp_editor( $pxlcore_wysiwyg_content, $pxlcore_site_option_setting[ 'setting_name' ], $pxlcore_editor_settings );
+											    	
+											    	break;
 											    
 											    /* any other type of input - treat as text input */ 
 											    default:

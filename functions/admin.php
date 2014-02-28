@@ -514,6 +514,7 @@ function pxlcore_register_settings() {
 		array(
 			'pxlcore_contact_email',
 			'pxlcore_tel_no',
+			'pxlcore_footer_text',
 		)
 	);
 	
