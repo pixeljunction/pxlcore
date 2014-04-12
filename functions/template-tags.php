@@ -203,3 +203,29 @@ function pxlcore_var_dump( $data, $label = '' ) {
 	return;
 
 }
+
+/***************************************************************
+* Function pxlcore_get_blog_permalink()
+* Find and returns the permalink of the page used for blog posts.
+***************************************************************/
+function pxlcore_get_blog_permalink() {
+	
+	/* get the post used for pages */
+	$pxlcore_blog_page_id = get_option( 'page_for_posts' );
+	
+	/* check the page id does not equal zero */
+	if( $pxlcore_blog_page_id != 0 ) {
+		
+		/* build permalink of the blog page */
+		$pxlcore_blog_permalink = get_permalink( $pxlcore_blog_page_id );
+		
+		return $pxlcore_blog_permalink;
+		
+	/* no blog page set */	
+	} else {
+		
+		return false;
+		
+	}
+	
+}
