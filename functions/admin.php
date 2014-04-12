@@ -298,8 +298,7 @@ function pxlcore_pixel_profile_field( $user ) {
 	
 }
 
-add_action( 'show_user_profile', 'pxlcore_pixel_profile_field' );
-add_action( 'edit_user_profile', 'pxlcore_pixel_profile_field' );
+add_action( 'personal_options', 'pxlcore_pixel_profile_field' );
 
 /***************************************************************
 * Function pxlcore_save_pixel_profile_field()
