@@ -195,8 +195,8 @@ class CMB_Meta_Box {
 		if ( ! $post_id ) 
 			$post_id  = isset( $_POST['post_id'] ) ? $_POST['post_id'] : null;
 
-		if ( ! $post_id || ! isset( $meta_box['show_on']['page-template'] ) )
-			return $display;
+		//if ( ! $post_id || ! isset( $meta_box['show_on']['page-template'] ) )
+			//return $display;
 
 		// Get current template
 		$current_template = get_post_meta( $post_id, '_wp_page_template', true );
