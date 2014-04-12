@@ -97,6 +97,36 @@ h4.pxlcore-col-title {
 	margin-bottom: 12px;
 }
 
+/* pxlcore setting styles
+----------------------------------------------- */
+.pxlcore-setting th label::before {
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	font: normal 20px/1 'dashicons';
+	vertical-align: top;
+	margin-right: 5px;
+}
+.pxlcore-setting-twitter th label::before {
+	content: "\f301";
+	color: #4099FF;
+}
+.pxlcore-setting-facebook th label::before {
+	content: "\f304";
+	color: #3B5998;
+}
+.pxlcore-setting-linkedin th label::before {
+	content: "\f103";
+}
+.pxlcore-setting-email th label::before {
+	content: "\f466";
+}
+.pxlcore-setting-telno th label::before {
+	content: "\f470";
+}
+.pxlcore-setting-footer_text th label::before {
+	content: "\f464";
+}
+
 /* general styles
 ----------------------------------------------- */
 .clearfix {

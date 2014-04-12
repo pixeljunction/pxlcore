@@ -33,30 +33,6 @@ function pxlcore_site_options_content() {
 			<table class="form-table">
 			
 				<tbody>
-					<tr valign="top">
-						<th scope="row">
-							<label for="blogname">Site Title</label>
-						</th>
-						<td>
-							<input type="text" name="blogname" id="blogname" class="regular-text" value="<?php echo get_option( 'blogname' ); ?>">
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">
-							<label for="blogdescription">Tagline</label>
-						</th>
-						<td>
-							<input type="text" name="blogdescription" id="blogdescription" class="regular-text" value="<?php echo get_option( 'blogdescription' ); ?>">
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">
-							<label for="admin_email">Admin Email</label>
-						</th>
-						<td>
-							<input type="text" name="admin_email" id="admin_email" class="regular-text" value="<?php echo get_option( 'admin_email' ); ?>">
-						</td>
-					</tr>
 					
 					<?php
 					
@@ -64,40 +40,48 @@ function pxlcore_site_options_content() {
 						$pxlcore_site_option_settings = apply_filters(
 							'pxlcore_site_option_settings',
 							array(
+								'pxlcore_twitter_url' => array(
+									'setting_name' => 'pxlcore_twitter_url',
+									'setting_label' => 'Twitter URL',
+									'setting_description' => 'Enter the URL for your Twitter page.',
+									'setting_type' => 'text',
+									'setting_class' => 'twitter',
+								),
+								'pxlcore_facebook_url' => array(
+									'setting_name' => 'pxlcore_facebook_url',
+									'setting_label' => 'Facebook URL',
+									'setting_description' => 'Enter the URL for your Facebook page.',
+									'setting_type' => 'text',
+									'setting_class' => 'facebook',
+								),
+								'pxlcore_linkedin_url' => array(
+									'setting_name' => 'pxlcore_linkedin_url',
+									'setting_label' => 'LinkedIn URL',
+									'setting_description' => 'Enter the URL for your LinkedIn page.',
+									'setting_type' => 'text',
+									'setting_class' => 'linkedin',
+								),
 								'pxlcore_content_email' => array(
 									'setting_name' => 'pxlcore_contact_email',
 									'setting_label' => 'Contact Email',
 									'setting_description' => 'Enter a contact email here, this may be used on the site for people to get in touch with you.',
 									'setting_type' => 'text',
+									'setting_class' => 'email',
 								),
 								'pxlcore_tel_no' => array(
 									'setting_name' => 'pxlcore_tel_no',
 									'setting_label' => 'Telephone Number',
 									'setting_description' => 'Please enter your contact telephone number here, which may be displayed on the site depending on your design.',
 									'setting_type' => 'text',
+									'setting_class' => 'telno',
 								),
 								'pxlcore_footer_text' => array(
 									'setting_name' => 'pxlcore_footer_text',
 									'setting_label' => 'Footer Text',
 									'setting_description' => 'Enter text here to display in the footer of your site. You could include a Copyright notice for example.',
 									'setting_type' => 'wysiwyg',
+									'setting_class' => 'footer_text',
 								),
-								/*array(
-									'setting_name' => 'pxlcore_select_test',
-									'setting_label' => 'Textarea label',
-									'setting_description' => 'Something here',
-									'setting_type' => 'select',
-									'setting_options' => array(
-										array(
-											'name' => 'Name 1',
-											'value' => 'Value 1',
-										),
-										array(
-											'name' => 'Name 2',
-											'value' => 'Value 2',
-										),
-									),
-								),*/
 							)
 						);
 
@@ -109,9 +93,9 @@ function pxlcore_site_options_content() {
 							
 								?>
 						
-								<tr valign="top">
+								<tr valign="top" class="pxlcore-setting pxlcore-setting-<?php echo esc_attr( $pxlcore_site_option_setting[ 'setting_class' ] ); ?>">
 									<th scope="row">
-										<label for="<?php echo $pxlcore_site_option_setting[ 'setting_name' ]; ?>"><?php echo $pxlcore_site_option_setting[ 'setting_label' ]; ?></label>
+										<label for="<?php echo esc_attr( $pxlcore_site_option_setting[ 'setting_name' ] ); ?>"><?php echo $pxlcore_site_option_setting[ 'setting_label' ]; ?></label>
 									</th>
 									<td>
 										

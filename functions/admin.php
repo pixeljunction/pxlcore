@@ -512,6 +512,9 @@ function pxlcore_register_settings() {
 	$pxlcore_registered_settings = apply_filters(
 		'pxlcore_register_site_option_settings',
 		array(
+			'pxlcore_twitter_url',
+			'pxlcore_facebook_url',
+			'pxlcore_linkedin_url',
 			'pxlcore_contact_email',
 			'pxlcore_tel_no',
 			'pxlcore_footer_text',
