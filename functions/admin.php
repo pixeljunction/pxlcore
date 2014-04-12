@@ -200,7 +200,7 @@ function pxlcore_remove_meta_boxes() {
 				array(
 					'id' => 'tagsdiv-post_tag',
 					'page' => 'post',
-					'context' => 'normal'
+					'context' => 'side'
 				),
 				array(
 					'id' => 'authordiv',
