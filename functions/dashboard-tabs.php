@@ -54,7 +54,19 @@ function pxlcore_dashboard_welcome_tab() {
 			<ul class="pixel-important-info-list">
 			
 				<li class="aftercare-date<?php echo esc_attr( $pxlcore_aftercare_class ); ?>"><span class="label">Aftercare ends on:</span> <span class="value"><?php echo esc_html( $pxlcore_aftercare_date ); ?></span></li>
-				<li class="hosting-renewal-date<?php echo esc_attr( $pxlcore_hosting_class ); ?>"><span class="label">Hosting renewal date:</span> <span class="value"><?php echo esc_html( $pxlcore_hosting_renewal_date ); ?></span></li>
+				
+				<?php
+				
+					/* check whether a hosting renewal date is added */
+					if( ! empty( $pxlcore_hosting_renewal_date ) ) {
+						
+						?>
+						<li class="hosting-renewal-date<?php echo esc_attr( $pxlcore_hosting_class ); ?>"><span class="label">Hosting renewal date:</span> <span class="value"><?php echo esc_html( $pxlcore_hosting_renewal_date ); ?></span></li>
+						<?php
+						
+					}
+				
+				?>
 			
 			</ul>
 			
