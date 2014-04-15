@@ -7,6 +7,16 @@
 	content: "\f108";
 }
 
+/* layout styles for pxlcore
+----------------------------------------------- */
+.col {
+	float: left;
+}
+.col-half {
+	width: 48%;
+	margin-right: 4%;
+}
+
 /* admin styles for pxlcore
 ----------------------------------------------- */
 #pxlcore-updates {
@@ -97,6 +107,73 @@ h4.pxlcore-col-title {
 	margin-bottom: 12px;
 }
 
+/* new */
+.about-wrap .pxlcore-badge {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.pxlcore-badge {
+	background-color: #A3D8EA;
+	color: #78c8e6;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.2);
+	box-shadow: 0 1px 3px rgba(0,0,0,.2);
+	background: url(images/wordpress-logo-white.svg) no-repeat;
+	background-position: center 24px;
+	background-size: 85px 85px;
+	font-size: 14px;
+	text-align: center;
+	font-weight: 600;
+	margin: 5px 0 0;
+	padding-top: 120px;
+	height: 40px;
+	display: inline-block;
+	width: 150px;
+	text-rendering: optimizeLegibility;
+}
+ul.pixel-members {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+ul.pixel-members li.pixel-member img {
+	border-radius: 100px;
+}
+.pixel-member-avatar {
+	float: left;
+	width: 35%;
+	margin-right: 2%;
+}
+.pixel-member-info {
+	float: left;
+	width: 63%;
+}
+h3.pixel-member-name {
+	margin-top: 0;
+}
+ul.pixel-important-info-list li {
+	margin-bottom: 5%;
+}
+span.value {
+	padding: 1% 2%;
+	width: 50%;
+	margin-left: 3%;
+	background-color: #FFFFFF;
+	display: inline-block;
+}
+span.label {
+	width: 40%;
+	display: inline-block;
+}
+ul.pixel-important-info-list li.red span.value {
+	background-color: #db4d4d;
+	color: #FFFFFF;
+}
+
+h5.pixel-content-title {
+	font-size: 1em;
+}
+
 /* pxlcore setting styles
 ----------------------------------------------- */
 .pxlcore-setting th label::before {
@@ -127,8 +204,69 @@ h4.pxlcore-col-title {
 	content: "\f464";
 }
 
+/* pxlcore tabs styles
+----------------------------------------------- */
+ul.pxlcore-tabs {
+	border-bottom-color: #ccc;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	padding-bottom: 0;
+	font-size: 23px;
+	font-weight: 400;
+	line-height: 29px;
+	padding-left:6px;
+	margin-bottom: 0;
+}
+ul.pxlcore-tabs li {
+	display: inline-block;
+	margin: 0 3px -1px 0;
+}
+ul.pxlcore-tabs li a {
+	padding: 4px 15px 6px;
+	font-size: 18px;
+	vertical-align: top;
+	border-width: 1px;
+	color: #555;
+	border-color: #ccc;
+	text-decoration: none;
+	display: block;
+	border-style: solid;
+	background: #e4e4e4;
+	font-weight: bold;
+	
+}
+ul.pxlcore-tabs li a.active {
+	color: #000;
+	border-bottom-color: #F1F1F1;
+	background-color: #F1F1F1;
+}
+
+h3.pixel-service-type-title {
+	margin-bottom: 4%;
+	padding: 4%;
+	border-top: 1px solid #A3D8EA;
+	border-bottom: 1px solid #A3D8EA;
+	text-align: center;
+	font-weight: 300;
+	font-size: 1.8em;
+	text-transform: uppercase;
+	margin-top: 0;
+}
+.about-wrap img.service-icon {
+	margin: 0 auto;
+	margin-bottom: 2%;
+	display: block;
+}
+h4.pixel-service-title {
+	text-align: center;
+	font-weight: normal;
+}
+
 /* general styles
 ----------------------------------------------- */
 .clearfix {
 	clear: both;
+}
+.col-last {
+	margin-right: 0;
 }

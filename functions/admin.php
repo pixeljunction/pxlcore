@@ -373,6 +373,13 @@ function pxlcore_update_scripts() {
 	
 	} // end if we are on update-core page
 	
+	/* check whether the current admin page is pxlcore dashboard page */
+	if( $pagenow == 'admin.php' ) {
+	
+		wp_enqueue_script( 'pxlcore_tabs', plugins_url( 'js/pxlcore-tabs.js', dirname( __FILE__ ) ), 'jquery' );
+	
+	}
+	
 }
 
 add_action( 'admin_enqueue_scripts', 'pxlcore_update_scripts' );
@@ -531,3 +538,67 @@ function pxlcore_register_settings() {
 }
 
 add_action( 'admin_init', 'pxlcore_register_settings' );
+
+/***************************************************************
+* Function pxlcore_dates_settings()
+* Adds settings for hosting and aftercare dates to general settings.
+***************************************************************/
+class pxlcore_dates_settings {
+    
+    function pxlcore_dates_settings( ) {
+        add_filter( 'admin_init' , array( &$this , 'register_fields' ) );
+    }
+    
+    function register_fields() {
+    	
+    	/* if the current user is not a pixel team member */
+		if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' )
+			return;
+		
+		/* register the settings with WordPress */
+    	register_setting(
+    		'general',
+			'pxlcore_hosting_renewal_date',
+			'esc_attr'
+		);
+		
+		register_setting(
+    		'general',
+			'pxlcore_aftercare_end_date',
+			'esc_attr'
+		);
+		
+		/* add new settings field on the general settings page */
+        add_settings_field(
+        	'pxlcore_hosting_renewal_date',
+        	'<label for="pxlcore_hosting_renewal_date">Hosting Renewal Date</label>',
+        	array( &$this, 'hosting_fields_html' ),
+        	'general'
+        );
+        
+        add_settings_field(
+        	'pxlcore_aftercare_end_date',
+        	'<label for="pxlcore_aftercare_end_date">Aftercare End Date</label>',
+        	array( &$this, 'aftercare_fields_html' ),
+        	'general'
+        );
+        
+    }
+    
+    function hosting_fields_html() {
+    	    	
+        $value = get_option( 'pxlcore_hosting_renewal_date' );
+        echo '<input type="text" id="pxlcore_hosting_renewal_date" name="pxlcore_hosting_renewal_date" value="' . $value . '" />';
+        
+    }
+    
+    function aftercare_fields_html() {
+    	    	
+        $value = get_option( 'pxlcore_aftercare_end_date' );
+        echo '<input type="text" id="pxlcore_aftercare_end_date" name="pxlcore_aftercare_end_date" value="' . $value . '" />';
+        
+    }
+    
+}
+
+$new_general_setting = new pxlcore_dates_settings();

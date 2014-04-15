@@ -27,6 +27,9 @@ require_once dirname( __FILE__ ) . '/functions/counters.php';
 /* load plugin template tags */
 require_once dirname( __FILE__ ) . '/functions/template-tags.php';
 
+/* load plugin dashboard tabs */
+require_once dirname( __FILE__ ) . '/functions/dashboard-tabs.php';
+
 /* check whether the metabox class already exists */
 if( ! class_exists( 'CMB_Meta_Box' ) ) {
 

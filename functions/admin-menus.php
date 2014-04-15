@@ -14,7 +14,7 @@ function pxlcore_dashboard() {
 	} else {
 		
 		/* load plugin dashboard content file */
-		require_once PXLCORE_LOCATION . '/inc/pxlcore-dashboard-content.php';
+		require_once PXLCORE_LOCATION . '/inc/dashboard-content.php';
 		
 	}
 	

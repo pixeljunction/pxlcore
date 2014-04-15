@@ -229,3 +229,37 @@ function pxlcore_get_blog_permalink() {
 	}
 	
 }
+
+function pxlcore_get_pixel_users() {
+	
+	$pxlcore_pixel_users_args = array(
+		'meta_key' => 'pixel_member',
+		'meta_value' =>	'yes',
+		'role' => '',
+	);
+	
+	/* create the user query */
+	$pxlcore_pixel_users = new WP_User_Query( $pxlcore_pixel_users_args );
+	
+	/* check results of user query are not empty */
+	if ( ! empty( $pxlcore_pixel_users->results ) ) {
+
+		/* setup an array to store user ids in */
+		$pxlcore_user_ids = array();
+		
+		/* loop through each user returned */
+		foreach ( $pxlcore_pixel_users->results as $pxlcore_pixel_user ) {
+			
+			$pxlcore_user_ids[] = $pxlcore_pixel_user->ID;
+			
+		}
+	
+	}
+	
+	/* reset query */
+	wp_reset_query();
+		
+	/* return array of pixel user ids */
+	return $pxlcore_user_ids;
+	
+}
