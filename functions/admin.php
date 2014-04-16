@@ -277,7 +277,7 @@ function pxlcore_pixel_profile_field( $user ) {
 	<table class="form-table">
 
 		<tr>
-			<th><label for="pixel_member">Pixel Team Member?</label></th>
+			<th><label for="pixel_member"><?php echo apply_filters( 'pxlcore_ultra_admin_label', 'Pixel Team Member?' ); ?></label></th>
 
 			<td>
 				<select name="pixel_member" id="pixel_member">
