@@ -33,6 +33,9 @@ require_once dirname( __FILE__ ) . '/functions/dashboard-tabs.php';
 /* load plugin admin bar changes */
 require_once dirname( __FILE__ ) . '/functions/admin-bar.php';
 
+/* load plugin admin bar changes */
+require_once dirname( __FILE__ ) . '/functions/post-type-description.php';
+
 /* check whether the metabox class already exists */
 if( ! class_exists( 'CMB_Meta_Box' ) ) {
 
