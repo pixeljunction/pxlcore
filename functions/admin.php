@@ -1,42 +1,5 @@
 <?php
 /***************************************************************
-* Function pxlcore_local_dev_indicator()
-* Adds a warming in the admin bar if this is a local site or if
-* the site is on pixeljunctiondemo.co.uk
-***************************************************************/
-function pxlcore_local_dev_indicator() {
-	
-	/* bail early if user is not super admin or the admin bar is not showing */
-	if ( !is_super_admin() || !is_admin_bar_showing() )
-		return;
-	
-	/* initialise the global admin bar variable */
-	global $wp_admin_bar;
-	
-	/* get the server name */
-	$pxlcore_server_name = $_SERVER[ 'SERVER_NAME' ];
-	
-	/* check whether server name contains pixeljunctiondemo.co.uk or local host */
-	if( strpos( $pxlcore_server_name, apply_filters( 'pxlcore_staging_url', 'pixeljunctiondemo.co.uk' ) ) !== false || strpos( $pxlcore_server_name, apply_filters( 'pxlcore_local_url', 'pixel.dev' ) ) !== false ) {
-		
-		/* add a menu to the admin bar */
-		$wp_admin_bar->add_menu(
-			array(
-				'parent' => false,
-				'id' => 'server_ip',
-				'title' => 'Development Version',
-				'href' => '#',
-				'meta' => array( 'class' => 'local-indicator' )
-			)
-		);
-		
-	} // end check whether we are pixeljunctiondemo.co.uk or localhost
-	
-}
-
-add_action( 'wp_before_admin_bar_render', 'pxlcore_local_dev_indicator' );
-
-/***************************************************************
 * Function pxlcore_howdy()
 * Change Howdy? in the admin bar
 ***************************************************************/
