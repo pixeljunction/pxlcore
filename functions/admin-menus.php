@@ -52,21 +52,16 @@ add_action( 'admin_menu', 'pxlcore_add_dashboard_home' );
 ***************************************************************/
 function pxlcore_add_site_options() {
 	
-	/* if the current user is a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
-	
-		/* add a new menu item linking to our new dashboard page */
-		add_menu_page(
-			'Site Options',
-			'Site Options',
-			'edit_posts',
-			'pxlcore_site_options',
-			'pxlcore_site_options_content',
-			'div',
-			99
-		);
-	
-	}
+	/* add a new menu item linking to our new dashboard page */
+	add_menu_page(
+		'Site Options',
+		'Site Options',
+		'edit_posts',
+		'pxlcore_site_options',
+		'pxlcore_site_options_content',
+		'div',
+		99
+	);
 	
 }
 
