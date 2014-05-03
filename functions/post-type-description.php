@@ -1,14 +1,4 @@
 <?php
-/*
-Plugin Name: Post Type Description
-Plugin URI: http://stomptheweb.co.uk
-Description: Adds the ability to add a description of your post type into your template
-Version: 1.0.0
-Author: Steven Jones
-Author URI: http://stomptheweb.co.uk/
-License: GPL2
-*/
-
 /***************************************************************
 * Function pxlcore_add_submenu_page()
 * add a submenu item labelled 'Description' to each public post

@@ -3,7 +3,7 @@
 Plugin Name: Pixel Core
 Plugin URI: http://markwilkinson.me/plugins/pixelcore
 Description: This is a backone plugin that adds a bunch of functions to transform(!) your WordPress blog ready to start theming. After building a number of WordPress sites I found myself adding the same code to every site and therefore I have bundled this into a plugin.
-Version: 1.2.5
+Version: 1.3
 Author: Mark Wilkinson
 Author URI: http://markwilkinson.me
 License: GPLv2 or later
@@ -28,7 +28,7 @@ require_once dirname( __FILE__ ) . '/functions/counters.php';
 require_once dirname( __FILE__ ) . '/functions/template-tags.php';
 
 /* load plugin dashboard tabs */
-require_once dirname( __FILE__ ) . '/functions/dashboard-tabs.php';
+require_once dirname( __FILE__ ) . '/functions/dashboard-tabs-content.php';
 
 /* load plugin admin bar changes */
 require_once dirname( __FILE__ ) . '/functions/admin-bar.php';

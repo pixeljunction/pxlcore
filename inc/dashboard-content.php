@@ -13,7 +13,12 @@
 			
 			<?php
 			
-				/* set an array of tabs */
+				/***************************************************************
+				* set an array of tab titles and ids
+				* the id set here should match the id given to the content wrapper
+				* which has the class pxlcore-tab-content included in the callback
+				* function
+				***************************************************************/
 				$pxlcore_dashboard_tabs = apply_filters(
 					'pxlcore_dashboard_tabs',
 					array(
