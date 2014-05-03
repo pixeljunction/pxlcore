@@ -6,7 +6,7 @@
 function pxlcore_admin_bar_edit() {
 
 	/* if the current user is a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) == 'yes' )
+	if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) == '1' )
 		return;
 
 	global $wp_admin_bar;

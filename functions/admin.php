@@ -46,7 +46,7 @@ add_filter('admin_footer_text', 'pxlcore_admin_footer_text');
 function pxlcore_change_login_landing( $redirect_to, $request_redirect_to, $user ) {
 	
 	/* if the current user is a pixel team member */
-	if( get_user_meta( $user->ID, 'pixel_member', true ) != 'yes' ) {
+	if( get_user_meta( $user->ID, 'pxlcore_core_user', true ) != '1' ) {
 	
 		/* return the url of our new dashboard page */
 		return apply_filters( 'pxlcore_login_redirect', admin_url( 'admin.php?page=pxlcore_dashboard' ) );
@@ -105,7 +105,7 @@ add_action( 'login_head', 'pxlcore_login_logo' );
 function pxjn_alter_admin_bar() {
 
 	/* if the current user is not a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+	if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) != '1' ) {
 		
 		/* load the admin bar global variable */
 		global $wp_admin_bar;
@@ -126,7 +126,7 @@ add_action( 'wp_before_admin_bar_render', 'pxjn_alter_admin_bar', 0 );
 function pxlcore_remove_meta_boxes() {
 
 	/* if the current user is not a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+	if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) != '1' ) {
 	
 		$remove_metaboxes = apply_filters( 'pxlcore_remove_metaboxes',
 			array(
@@ -234,23 +234,26 @@ function pxlcore_pixel_profile_field( $user ) {
 		return false;
 	
 	?>
-	
-	<h3>Additional Information</h3>
 
 	<table class="form-table">
 
 		<tr>
-			<th><label for="pixel_member"><?php echo apply_filters( 'pxlcore_ultra_admin_label', 'Pixel Team Member?' ); ?></label></th>
+			<th scope="row">Core User?</th>
 
 			<td>
-				<select name="pixel_member" id="pixel_member">
 				
-					<option value="no" <?php if( esc_attr( get_user_meta( $user->ID, 'pixel_member', true ) ) == 'no' ) { echo 'selected="selected"'; } ?>>No</option>
-					<option value="yes"<?php if( esc_attr( get_user_meta( $user->ID, 'pixel_member', true ) ) == 'yes' ) { echo 'selected="selected"'; } ?>>Yes</option>
+				<fieldset>
 				
-				</select>
+					<legend class="screen-reader-text">
+						<span>Core User?</span>
+					</legend>
+					
+					<label>
+						<input name="pxlcore_core_user" type="checkbox" id="pxlcore_core_user" value="1"<?php checked( get_user_meta( $user->ID, 'pxlcore_core_user', true ) ) ?> />
+						Choose whether this user is a core user.
+					</label>
 				
-				<span class="description">Choose whether this user is a member of the Pixel Junction Team.</span>
+				</fieldset>
 				
 			</td>
 		</tr>
@@ -272,9 +275,23 @@ function pxlcore_save_pixel_profile_field( $user_id ) {
 	/* check the current user is a super admin */
 	if ( !current_user_can( 'manage_options', $user_id ) )
 		return false;
+		
+	/* get the current user information */
+	$pxlcore_current_user = wp_get_current_user();
 	
-	/* update the user meta with the additional fields on the profile page */
-	update_usermeta( $user_id, 'pixel_member', $_POST[ 'pixel_member' ] );
+	/* get the current users email address */
+	$pxlcore_current_user_email = $pxlcore_current_user->user_email;
+	
+	/* split email at the @ sign */
+	$pxlcore_email_parts = explode( '@', $pxlcore_current_user_email );
+	
+	/* get the email domain is a pixel one */
+	if( 'pixeljunction.co.uk' == $pxlcore_email_parts[1] ) {
+		
+		/* update the user meta with the additional fields on the profile page */
+		update_usermeta( $user_id, 'pxlcore_core_user', $_POST[ 'pxlcore_core_user' ] );
+		
+	}
 	
 }
 
@@ -376,7 +393,7 @@ function pxlcore_update_start() {
 	if( $pagenow == 'update-core.php' ) {
 		
 		/* if the current user is not a pixel team member */
-		if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+		if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) != 'yes' ) {
 		
 			/* echo our message */
 			echo '<div id="pxlcore-updates" class="wrap">';
@@ -515,7 +532,7 @@ class pxlcore_dates_settings {
     function register_fields() {
     	
     	/* if the current user is not a pixel team member */
-		if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' )
+		if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) != 'yes' )
 			return;
 		
 		/* register the settings with WordPress */
@@ -565,3 +582,24 @@ class pxlcore_dates_settings {
 }
 
 $new_general_setting = new pxlcore_dates_settings();
+
+/***************************************************************
+* Function pxlcore_give_edit_theme_options()
+* Adds widgets and menus to editors.
+***************************************************************/
+function pxlcore_give_edit_theme_options( $caps ) {
+	
+	/* check if the user has the edit_pages capability */
+	if( ! empty( $caps[ 'edit_pages' ] ) ) {
+		
+		/* give the user the edit theme options capability */
+		$caps[ 'edit_theme_options' ] = true;
+		
+	}
+	
+	/* return the modified capabilities */
+	return $caps;
+	
+}
+
+add_filter( 'user_has_cap', 'pxlcore_give_edit_theme_options' );

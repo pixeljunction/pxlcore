@@ -230,10 +230,14 @@ function pxlcore_get_blog_permalink() {
 	
 }
 
-function pxlcore_get_pixel_users() {
+/***************************************************************
+* Function pxlcore_get_core_users()
+* Returns an array of user IDs for all core users.
+***************************************************************/
+function pxlcore_get_core_users() {
 	
 	$pxlcore_pixel_users_args = array(
-		'meta_key' => 'pixel_member',
+		'meta_key' => 'pxlcore_core_user',
 		'meta_value' =>	'yes',
 		'role' => '',
 	);

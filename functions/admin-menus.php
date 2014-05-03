@@ -27,7 +27,7 @@ function pxlcore_dashboard() {
 function pxlcore_add_dashboard_home() {
 	
 	/* if the current user is a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+	if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) != '1' ) {
 	
 		/* add a new menu item linking to our new dashboard page */
 		add_menu_page(
@@ -53,7 +53,7 @@ add_action( 'admin_menu', 'pxlcore_add_dashboard_home' );
 function pxlcore_add_site_options() {
 
 	/* if the current user is not a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+	if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) != '1' ) {
 	
 		/* add a new menu item linking to our new dashboard page */
 		add_menu_page(
@@ -92,7 +92,7 @@ add_action( 'admin_menu', 'pxlcore_add_site_options' );
 function pxlcore_remove_admin_menus() {
 
 	/* if the current user is not a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+	if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) != '1' ) {
 	
 		$pxlcore_remove_menu_items = apply_filters( 'pxlcore_remove_admin_menus', array(
 			'index.php',
@@ -125,7 +125,7 @@ add_action( 'admin_menu', 'pxlcore_remove_admin_menus', 999 );
 function pxlcore_remove_admin_sub_menus() {
 	
 	/* if the current user is not a pixel team member */
-	if( get_user_meta( get_current_user_id(), 'pixel_member', true ) != 'yes' ) {
+	if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) != '1' ) {
 	
 		$pxlcore_remove_sub_menu_items = apply_filters( 'pxlcore_remove_admin_sub_menus',
 			array(
