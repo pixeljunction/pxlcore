@@ -79,7 +79,7 @@ function pxlcore_dashboard_welcome_tab() {
 			<?php
 				
 				/* get user ids of all pixel users */
-				$pxlcore_pxl_users = pxlcore_get_pixel_users();
+				$pxlcore_pxl_users = pxlcore_get_core_users();
 				
 				/* check we have some users to show */
 				if( ! empty( $pxlcore_pxl_users ) ) {
