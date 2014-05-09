@@ -82,6 +82,7 @@ function pxlcore_site_options_content() {
 									'setting_type' => 'wysiwyg',
 									'setting_class' => 'footer_text',,
 									'media_buttons' => false,
+									'textarea_rows' => 5,
 								),
 							)
 						);
@@ -146,7 +147,7 @@ function pxlcore_site_options_content() {
 											    											    	
 											    	/* set some settings args for the editor */
 											    	$pxlcore_editor_settings = array(
-											    		'textarea_rows' => 5,
+											    		'textarea_rows' => $pxlcore_site_option_setting[ 'textarea_rows' ],
 											    		'media_buttons' => $pxlcore_site_option_setting[ 'media_buttons' ],
 											    	);
 											    	
