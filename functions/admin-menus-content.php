@@ -80,7 +80,8 @@ function pxlcore_site_options_content() {
 									'setting_label' => 'Footer Text',
 									'setting_description' => 'Enter text here to display in the footer of your site. You could include a Copyright notice for example.',
 									'setting_type' => 'wysiwyg',
-									'setting_class' => 'footer_text',
+									'setting_class' => 'footer_text',,
+									'media_buttons' => false,
 								),
 							)
 						);
@@ -146,7 +147,7 @@ function pxlcore_site_options_content() {
 											    	/* set some settings args for the editor */
 											    	$pxlcore_editor_settings = array(
 											    		'textarea_rows' => 5,
-											    		'media_buttons' => false,
+											    		'media_buttons' => $pxlcore_site_option_setting[ 'media_buttons' ],
 											    	);
 											    	
 											    	/* get current content for the wysiwyg */
