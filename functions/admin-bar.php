@@ -22,7 +22,7 @@ function pxlcore_admin_bar_edit() {
 	} else {
 
 		/* set link to admin url */
-		$pxlcore_site_link = admin_url();
+		$pxlcore_site_link = admin_url( 'admin.php?page=pxlcore_dashboard' );
 		$pxlcore_link_name = 'Site Admin';
 
 	} // end check if admin

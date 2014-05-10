@@ -94,22 +94,21 @@ h4.pxlcore-col-title {
 	right: 0;
 }
 .pxlcore-badge {
-	background-color: #A3D8EA;
+	background-color: #F2F2F2;
 	color: #78c8e6;
 	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.2);
 	box-shadow: 0 1px 3px rgba(0,0,0,.2);
-	background: url(images/wordpress-logo-white.svg) no-repeat;
-	background-position: center 24px;
-	background-size: 85px 85px;
 	font-size: 14px;
 	text-align: center;
 	font-weight: 600;
 	margin: 5px 0 0;
-	padding-top: 120px;
-	height: 40px;
 	display: inline-block;
-	width: 150px;
+	width: 100px;
 	text-rendering: optimizeLegibility;
+	padding: 10px;
+}
+.pxlcore-badge img {
+	margin-bottom: 5px;
 }
 ul.pixel-members {
 	list-style-type: none;
@@ -118,18 +117,18 @@ ul.pixel-members {
 }
 ul.pixel-members li.pixel-member img {
 	border-radius: 100px;
+	height: auto;
 }
-.pixel-member-avatar {
+ul.pixel-members li.pixel-member {
 	float: left;
-	width: 35%;
-	margin-right: 2%;
+	width: 30%;
+	margin-right: 3.333333333%;
+	margin-bottom: 3.333333333%;
 }
-.pixel-member-info {
-	float: left;
-	width: 63%;
-}
-h3.pixel-member-name {
-	margin-top: 0;
+h4.pixel-member-name {
+	margin-top: 6%;
+	margin-bottom: 0;
+	text-align: center;
 }
 ul.pixel-important-info-list li {
 	margin-bottom: 5%;
@@ -249,4 +248,24 @@ h4.pixel-service-title {
 }
 .col-last {
 	margin-right: 0;
+}
+
+@media screen and (max-width: 782px) {
+
+	ul.pixel-members li.pixel-member {
+		float: left;
+		width: 48%;
+		margin-right: 2%;
+		margin-bottom: 2%;
+	}
+
+}
+
+@media screen and (max-width: 440px) {
+
+	ul.pixel-members li.pixel-member {
+		float: none;
+		width: 100%;
+	}
+
 }

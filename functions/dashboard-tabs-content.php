@@ -45,7 +45,7 @@ function pxlcore_dashboard_welcome_tab() {
 			
 		<div class="col col-half pixel-welcome-text">
 			<h3><?php echo apply_filters( 'pxlcore_thanks_heading', 'Thank you for choosing Pixel Junction.' ); ?></h3>
-			<p class="pxlcore-thankyou-text">The team at Pixel Junction would like to thank you for choosing Pixel Junction to create your website. The Pixel team members here will be working on your helping with your website.</p>
+			<p class="pxlcore-thankyou-text">Thank you for choosing Pixel Junction to build your website; we appreciate your business and have enjoyed working with you.</p>
 			
 			<h4 class="pixel-important-info">Important Information</h4>
 			
@@ -99,17 +99,8 @@ function pxlcore_dashboard_welcome_tab() {
 								
 									<div class="pixel-member-avatar">
 										<?php echo get_avatar( $pxlcore_pxl_user, 150 ); ?>
-									</div>
-									
-									<div class="pixel-member-info">
-									
 										<h4 class="pixel-member-name"><?php echo get_user_meta( $pxlcore_pxl_user, 'first_name', true ); ?> <?php echo get_user_meta( $pxlcore_pxl_user, 'last_name', true ); ?></h4>
-										
-										<p class="pixel-member-desription"><?php echo wpautop( get_user_meta( $pxlcore_pxl_user, 'description', true ) ); ?></p>
-									
 									</div>
-									
-									<div class="clearfix"></div>
 								
 								</li>
 								
@@ -167,7 +158,7 @@ function pxlcore_dashboard_services_tab() {
 			
 			<h3><?php echo apply_filters( 'pxlcore_services_heading', 'We have a lot more to offer - take a look!' ); ?></h3>
 			
-			<p>We do more than just websites! We offer a number of additional website design services as well as a whole host of graphic design offerings too. Take a look at what we can offer you below.</p>
+			<p>We do more than just websites! We offer a number of additional web and graphic design services too. Take a look below to see what we offer. Please feel free to get in touch if you would like further information on these services.</p>
 			
 			<div class="col col-half pxlcore-service-type pxlcore-service-webdesign">
 			
@@ -293,35 +284,7 @@ function pxlcore_dashboard_support_tab() {
 			
 			<div class="pixel-about-support-hub">
 			
-				<p>At Pixel Junction we realise that you are always going to need a little helping hand with your website, so that you can get the most out of it. This is why we offer you 21 days free after care. After that many clients worry about what ongoing costs there may be.</p>
-				
-				<h4 class="pixel-content-title">What are my Support Options?</h4>
-				
-				<p>You essentially have two options:</p>
-				
-				<h5 class="pixel-content-title">Pixel Support Hub Plan</h5>
-				
-				<p>Experience tells us the best websites are those that are flexible with dynamic content to keep the user interested. Sometimes you will find you want to change things outside of the scope of the CMS and for this you may well need our help. To assist you in this we offer some fixed price support plans that allow you a set amount of support time for one of your designers or developers to work on your site. The added bonus with our support hub plans, is that the time can be used in shorter 10 minutes block as opposed to 1 hour slots.</p>
-				
-				<p>These plans work on a ticketing system. If you have a support request simply create hub ticket which will be assigned to one of our team and you will be notified once the tasks is completed. You can track the time you have used in your plan easily in the system.</p>
-				
-				<p>The following Pixel Support Hub Plans are available:</p>
-				
-				<ul>
-				
-					<li><strong>Starter</strong>: 2 hours for £80</li>
-					<li><strong>Bronze</strong>: 4 hours for £150</li>
-					<li><strong>Silver</strong>: 8 hours for £280</li>
-					<li><strong>Gold</strong>: 16 hours for £520</li>
-				
-				</ul>
-				
-				<p>Plans with greater time can be offered with increasing discounts for the more time in the plan. Please feel free to discuss this with your account manager.</p>
-				
-				<h5 class="pixel-content-title">Hourly Rate Pay as You Go</h5>
-				
-				<p>Some sites need little updating throughout their lifetime. Therefore it is likely that they won't need much support as content won't change and new features may not be necessary.</p>
-
+				<p>Content here...</p>
 			
 			</div>
 			
@@ -331,42 +294,6 @@ function pxlcore_dashboard_support_tab() {
 				* @hook pxlcore_after_welcome_tab_content
 				***************************************************************/
 				do_action( 'pxlcore_after_support_tab_content' );
-			
-			?>
-		
-		</div>
-	
-	<?php
-	
-}
-
-/***************************************************************
-* function pxlcore_dashboard_offers_tab
-* Outputs the content for the dashboard support tab
-***************************************************************/
-function pxlcore_dashboard_offers_tab() {
-	
-	?>
-	
-		<div id="pixel-offers" class="pxlcore-tab-content">
-		
-			<?php
-		
-				/***************************************************************
-				* @hook pxlcore_before_welcome_tab_content
-				***************************************************************/
-				do_action( 'pxlcore_before_offers_tab_content' );
-			
-			?>
-		
-			<h3><?php echo apply_filters( 'pxlcore_offers_heading', 'Something to tempt you with - we hope!' ); ?></h3>
-			
-			<?php
-		
-				/***************************************************************
-				* @hook pxlcore_after_welcome_tab_content
-				***************************************************************/
-				do_action( 'pxlcore_after_offers_tab_content' );
 			
 			?>
 		

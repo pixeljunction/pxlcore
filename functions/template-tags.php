@@ -238,7 +238,7 @@ function pxlcore_get_core_users() {
 	
 	$pxlcore_pixel_users_args = array(
 		'meta_key' => 'pxlcore_core_user',
-		'meta_value' =>	'yes',
+		'meta_value' =>	'1',
 		'role' => '',
 	);
 	

@@ -1,11 +1,14 @@
 <?php global $wp_version; ?>
 <div class="wrap about-wrap pxlcore-dashboard-wrap">
 
-	<h1><?php bloginfo( 'name' ); ?> - Dashboard</h1>
+	<h1><?php bloginfo( 'name' ); ?><br />Dashboard</h1>
 	
-	<div class="about-text"><?php echo apply_filters( 'pxlcore_welcome_text', 'Welcome to your WordPress website, designed & developed by Pixel Junction.' ); ?></div>
+	<div class="about-text"><?php echo apply_filters( 'pxlcore_welcome_text', 'Welcome to your website, designed & developed by Pixel Junction.' ); ?></div>
 	
-	<div class="pxlcore-badge"><?php printf( __( 'Version %s' ), $wp_version ); ?></div>
+	<div class="pxlcore-badge">
+		<a href="<?php echo esc_url( apply_filters( 'pxlcore_version_logo_link_url', 'http://pixeljunction.co.uk' ) ); ?>"><img src="<?php echo esc_url( apply_filters( 'pxlcore_version_logo', plugins_url( 'images/logo.png', dirname( __FILE__ ) ) ) ); ?>" alt="Logo" /></a>
+		<?php printf( __( 'Version %s' ), $wp_version ); ?>
+	</div>
 	
 	<div class="pxlcore-tabs-wrapper">
 	
@@ -30,14 +33,10 @@
 							'id' => '#pixel-services',
 							'label' => 'Services',
 						),
-						'support' => array(
+						/*'support' => array(
 							'id' => '#pixel-support',
 							'label' => 'Support',
-						),
-						'offers' => array(
-							'id' => '#pixel-offers',
-							'label' => 'Latest Offers',
-						),
+						),*/
 					)
 				);
 				
@@ -71,12 +70,9 @@
 					'services' => array(
 						'callback' => 'pxlcore_dashboard_services_tab',
 					),
-					'support' => array(
+					/*'support' => array(
 						'callback' => 'pxlcore_dashboard_support_tab',
-					),
-					'offers' => array(
-						'callback' => 'pxlcore_dashboard_offers_tab',
-					),
+					),*/
 				)
 			);
 			
@@ -96,5 +92,3 @@
 		?>
 	
 	</div><!-- // pxlcore-tabs -->
-
-</div>
