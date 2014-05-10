@@ -267,3 +267,16 @@ function pxlcore_get_core_users() {
 	return $pxlcore_user_ids;
 	
 }
+
+/***************************************************************
+* Function pxlcore_get_current_url()
+* Returns the current url.
+***************************************************************/
+function pxlcore_get_current_url() {
+	
+	global $wp;
+	$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
+	
+	return $current_url;
+	
+}
