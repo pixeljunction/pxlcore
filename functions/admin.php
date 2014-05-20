@@ -285,8 +285,11 @@ function pxlcore_save_pixel_profile_field( $user_id ) {
 	/* split email at the @ sign */
 	$pxlcore_email_parts = explode( '@', $pxlcore_current_user_email );
 	
+	/* set the pxlcore email domain */
+	$pxlcore_email_domain = apply_filters( 'pxlcore_email_domain', 'pixeljunction.co.uk' );
+	
 	/* get the email domain is a pixel one */
-	if( 'pixeljunction.co.uk' == $pxlcore_email_parts[1] ) {
+	if( $pxlcore_email_domain == $pxlcore_email_parts[1] ) {
 		
 		/* update the user meta with the additional fields on the profile page */
 		update_usermeta( $user_id, 'pxlcore_core_user', $_POST[ 'pxlcore_core_user' ] );
@@ -393,7 +396,7 @@ function pxlcore_update_start() {
 	if( $pagenow == 'update-core.php' ) {
 		
 		/* if the current user is not a pixel team member */
-		if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) != 'yes' ) {
+		if( get_user_meta( get_current_user_id(), 'pxlcore_core_user', true ) != '1' ) {
 		
 			/* echo our message */
 			echo '<div id="pxlcore-updates" class="wrap">';
