@@ -33,7 +33,7 @@ function pxlcore_add_dashboard_home() {
 		add_menu_page(
 			'Dashboard',
 			'Dashboard',
-			'edit_posts',
+			'read',
 			'pxlcore_dashboard',
 			'pxlcore_dashboard',
 			'div',
