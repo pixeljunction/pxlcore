@@ -16,7 +16,7 @@ function pxlcore_add_submenu_page() {
 		$parent_slug = 'edit.php?post_type='.$post_type;
 		$page_title  = $post_type_obj->labels->name . ' description';
 		$menu_title  = 'Description';
-		$capability  = $post_type_obj->cap->edit_posts;
+		$capability  = $post_type_obj->cap->manage_options;
 		$menu_slug	 = $post_type_obj->name . '-description';
 		$function    = 'pxlcore_manage_description';
 
